@@ -18,18 +18,19 @@ public class MainActivity extends AppCompatActivity {
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
 
-        Button createAccBtn = (Button) findViewById(R.id.createAccount);
-        Button loginBtn = (Button) findViewById(R.id.login);
+        Button createAccount = (Button) findViewById(R.id.createAccount);
+        Button login = (Button) findViewById(R.id.login);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {                                                              // when the <Button login> is clicked
             @Override
             public void onClick(View view) {
-                if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin123")){
+                if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin123")){     // if the <TextView username> is admin <TextView password> is admin123
                     //correct
-                    Toast.makeText(MainActivity.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                }else{
+                    Toast.makeText(MainActivity.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();     // notify "LOGIN SUCCESSFUL"
+                    setContentView(R.layout.activity_admin_home);                                                          // bring to AdminHome screen
+                }else{                                                                                                     // if not
                     //incorrect
-                    Toast.makeText(MainActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();         // notify "LOGIN FAILED"
                 }
             }
         });
