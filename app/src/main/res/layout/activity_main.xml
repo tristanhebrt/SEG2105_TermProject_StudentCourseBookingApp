@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +7,15 @@
     android:background="@drawable/background2"
     tools:context=".MainActivity">
 
-
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="148dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="313dp"
         android:drawableStart="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
         android:hint="@string/username"
@@ -27,8 +29,10 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="448dp"
+        android:layout_marginBottom="237dp"
         android:drawableStart="@drawable/ic_baseline_lock_24"
         android:drawablePadding="10dp"
         android:hint="@string/password"
@@ -43,8 +47,14 @@
         android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="325dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="358dp"
         android:backgroundTint="#07FFFFFF"
         android:text="@string/create_account"
         app:layout_constraintBottom_toTopOf="@+id/username"
@@ -58,7 +68,14 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="494dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="189dp"
         android:backgroundTint="#07FFFFFF"
         android:text="@string/log_in"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,4 +86,4 @@
         app:layout_constraintVertical_bias="0.724" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
