@@ -42,11 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.createAccount:
                 Toast.makeText(this, "CREATE ACCOUNT", Toast.LENGTH_SHORT).show();
+                openStudentOrInstructor();
                 break;
             case R.id.login:
                 if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin123")) {     // if the <TextView username> is admin <TextView password> is admin123
                     //correct
-                    Toast.makeText(MainActivity.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();     // notify "LOGIN SUCCESSFUL"
+                    Toast.makeText(MainActivity.this, "Welcome! You are logged in as Admin", Toast.LENGTH_SHORT).show();     // notify "LOGIN SUCCESSFUL"
                     openAdminHome();
                 } else {                                                                                                     // if not
                     //incorrect
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openAdminHome() {
         Intent intent = new Intent(this, AdminHome.class);
+        startActivity(intent);
+    }
+
+    public void openStudentOrInstructor(){
+        Intent intent = new Intent(this, StudentOrInstructor.class);
         startActivity(intent);
     }
 }

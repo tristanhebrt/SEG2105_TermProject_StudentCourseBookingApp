@@ -10,4 +10,8 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="delete_accounts">Delete accounts</string>
+    <string name="instructor">Instructor</string>
+    <string name="student">Student</string>
+    <string name="create_a_new_instructor_account">Create a new instructor account</string>
+    <string name="create_a_new_student_account">Create a new student account</string>
 </resources>
