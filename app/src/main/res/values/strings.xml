@@ -14,4 +14,7 @@
     <string name="student">Student</string>
     <string name="create_a_new_instructor_account">Create a new instructor account</string>
     <string name="create_a_new_student_account">Create a new student account</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="email">Email</string>
 </resources>
