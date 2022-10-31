@@ -20,8 +20,44 @@
         android:layout_marginBottom="571dp"
         android:text="@string/create_a_new_instructor_account" />
 
+    <LinearLayout
+        android:id="@+id/name"
+        android:layout_width="367dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="451dp">
+
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+
+            android:inputType="textPersonName"
+            android:hint="@string/first_name" />
+
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+
+            android:inputType="textPersonName"
+            android:hint="@string/last_name" />
+    </LinearLayout>
+
     <EditText
-        android:id="@+id/emailText"
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -40,7 +76,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/usernameText"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -59,7 +95,7 @@
         android:hint="@string/username" />
 
     <EditText
-        android:id="@+id/passwordText"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -77,41 +113,18 @@
         android:hint="@string/password"
         android:inputType="textPassword" />
 
-
-    <LinearLayout
-        android:id="@+id/nameTexts"
-        android:layout_width="367dp"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="451dp">
-
-        <EditText
-            android:id="@+id/firstNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:ems="10"
-
-            android:inputType="textPersonName"
-            android:hint="@string/first_name" />
-
-        <EditText
-            android:id="@+id/lastNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:ems="10"
-
-            android:inputType="textPersonName"
-            android:hint="@string/last_name" />
-    </LinearLayout>
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="577dp"
+        android:layout_marginEnd="147dp"
+        android:layout_marginBottom="94dp"
+        android:text="@string/create_account" />
 
 </RelativeLayout>
