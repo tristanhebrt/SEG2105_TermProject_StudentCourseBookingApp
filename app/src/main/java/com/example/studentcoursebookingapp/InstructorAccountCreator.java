@@ -43,6 +43,8 @@ public class InstructorAccountCreator extends AppCompatActivity {
                 }catch (Exception e){
                     Toast.makeText(InstructorAccountCreator.this, "INVALID INFORMATION", Toast.LENGTH_SHORT).show();
                 }
+
+                DatabaseHelper databaseHelper = new DatabaseHelper(InstructorAccountCreator.this);
             }
         });
     }
