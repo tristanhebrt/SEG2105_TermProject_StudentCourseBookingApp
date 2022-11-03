@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,16 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
         setClickListeners();
 
         lv_instructorList = (ListView) findViewById(R.id.instructorList);
+
+        lv_instructorList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                InstructorModel clickedInstructor = (InstructorModel) parent.getItemAtPosition(position);
+                databaseHelper.deleteInstructorAccount(clickedInstructor);
+                ShowInstructorsOnListView(databaseHelper);
+                Toast.makeText(AdminHome.this, "Deleted instructor " + clickedInstructor.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setClickListeners() {

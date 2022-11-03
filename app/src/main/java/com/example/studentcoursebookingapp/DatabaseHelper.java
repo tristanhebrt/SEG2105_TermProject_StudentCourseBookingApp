@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteInstructorAccount(InstructorModel instructorModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + INSTRUCTOR_TABLE + "WHERE " + COLUMN_ID + " = " + instructorModel.getId();
+        String queryString = "DELETE FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = " + instructorModel.getId();
 
         Cursor cursor = db.rawQuery(queryString, null);
 
