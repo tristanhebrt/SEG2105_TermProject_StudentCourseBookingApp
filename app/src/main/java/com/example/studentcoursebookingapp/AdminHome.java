@@ -15,12 +15,10 @@ import java.util.Arrays;
 
 public class AdminHome extends AppCompatActivity implements View.OnClickListener {
     Button btn_createCourse, btn_editCourse, btn_deleteCourse, btn_viewInstructors, btn_viewStudents;
-    ListView lv_instructorList;
-    ListView lv_studentList;
+    ListView lv_instructorList, lv_studentList;
     InstructorDatabaseHelper instructorDatabaseHelper;
     StudentDatabaseHelper studentDatabaseHelper;
-    ArrayAdapter instructorArrayAdapter;
-    ArrayAdapter studentArrayAdapter;
+    ArrayAdapter instructorArrayAdapter, studentArrayAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
