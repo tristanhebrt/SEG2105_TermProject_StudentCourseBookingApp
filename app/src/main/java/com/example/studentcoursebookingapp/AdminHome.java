@@ -3,6 +3,7 @@ package com.example.studentcoursebookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 public class AdminHome extends AppCompatActivity implements View.OnClickListener {
-    Button btn_createCourse, btn_editCourse, btn_deleteCourse, btn_viewInstructors, btn_viewStudents;
+    Button btn_courseOptions, btn_viewInstructors, btn_viewStudents;
     ListView lv_instructorList, lv_studentList;
     InstructorDatabaseHelper instructorDatabaseHelper;
     StudentDatabaseHelper studentDatabaseHelper;
@@ -26,9 +27,7 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
 
-        btn_createCourse = (Button) findViewById(R.id.createCourse);
-        btn_editCourse = (Button) findViewById(R.id.editCourse);
-        btn_deleteCourse = (Button) findViewById(R.id.deleteCourse);
+        btn_courseOptions = (Button) findViewById(R.id.courseOptions);
         btn_viewInstructors = (Button) findViewById(R.id.viewInstructors);
         btn_viewStudents = (Button) findViewById(R.id.viewStudents);
         setClickListeners();
@@ -58,8 +57,7 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
     }
 
     private void setClickListeners() {
-        for (Button button : Arrays.asList(btn_createCourse, btn_editCourse, btn_deleteCourse,
-                btn_viewInstructors, btn_viewStudents)) {
+        for (Button button : Arrays.asList(btn_courseOptions, btn_viewInstructors, btn_viewStudents)) {
             button.setOnClickListener(this);
         }
     }
@@ -68,15 +66,11 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.createCourse:
-                Toast.makeText(AdminHome.this, "CREATE COURSE SUCCESSFUL", Toast.LENGTH_SHORT).show();
+            case R.id.courseOptions:
+                openAdminCourseOptions();
+                Toast.makeText(AdminHome.this, "Opening course options", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.editCourse:
-                Toast.makeText(AdminHome.this, "EDIT COURSE SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.deleteCourse:
-                Toast.makeText(AdminHome.this, "DELETE COURSE SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.viewInstructors:
                 lv_studentList.setVisibility(View.GONE);
                 lv_instructorList.setVisibility(View.VISIBLE);
@@ -104,5 +98,10 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
 
         studentArrayAdapter = new ArrayAdapter<StudentModel>(AdminHome.this, android.R.layout.simple_list_item_1, studentDatabaseHelper.getStudents());
         lv_studentList.setAdapter(studentArrayAdapter);
+    }
+
+    public void openAdminCourseOptions() {
+        Intent intent = new Intent(this, AdminCourseOptions.class);
+        startActivity(intent);
     }
 }
