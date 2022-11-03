@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INSTRUCTOR_PASSWORD = "INSTRUCTOR_PASSWORD";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, "customer.db", null, 1);
+        super(context, "instructor.db", null, 1);
     }
 
     // called when the database is first accessed
