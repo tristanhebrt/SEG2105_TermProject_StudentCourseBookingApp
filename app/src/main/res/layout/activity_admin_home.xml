@@ -160,4 +160,19 @@
         android:layout_marginBottom="18dp"
         android:background="#6BFFFFFF" />
 
+    <TextView
+        android:id="@+id/ADMIN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="335dp"
+        android:layout_marginBottom="685dp"
+        android:text="ADMIN"
+        android:textColor="@color/white"/>
+
 </RelativeLayout>

@@ -44,14 +44,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "CREATE ACCOUNT", Toast.LENGTH_SHORT).show();
                 openStudentOrInstructor();
                 break;
+
             case R.id.login:
+
                 if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin123")) {     // if the <TextView username> is admin <TextView password> is admin123
-                    //correct
                     Toast.makeText(MainActivity.this, "Welcome! You are logged in as Admin", Toast.LENGTH_SHORT).show();     // notify "Welcome! You are logged in as Admin"
                     openAdminHome();
-                } else {                                                                                                     // if not
-                    //incorrect
-                    Toast.makeText(MainActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();         // notify "LOGIN FAILED"
+
+                } else if (StudentDatabaseHelper.COLUMN_STUDENT_USERNAME.contains(username.getText().toString()) && StudentDatabaseHelper.COLUMN_STUDENT_PASSWORD.contains(password.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Welcome" + StudentDatabaseHelper.COLUMN_STUDENT_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
+                    openStudentHome();
+
+                } else if (DatabaseHelper.COLUMN_INSTRUCTOR_USERNAME.contains(username.getText().toString()) && DatabaseHelper.COLUMN_INSTRUCTOR_PASSWORD.contains(password.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Welcome" + DatabaseHelper.COLUMN_INSTRUCTOR_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as an instructor", Toast.LENGTH_SHORT).show();
+                    openInstructorHome();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -59,6 +68,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openAdminHome() {
         Intent intent = new Intent(this, AdminHome.class);
+        startActivity(intent);
+    }
+
+    public void openStudentHome() {
+        Intent intent = new Intent(this, StudentHome.class);
+        startActivity(intent);
+    }
+
+    public void openInstructorHome() {
+        Intent intent = new Intent(this, InstructorHome.class);
         startActivity(intent);
     }
 
