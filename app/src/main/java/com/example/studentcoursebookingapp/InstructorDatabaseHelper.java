@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class InstructorDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String INSTRUCTOR_TABLE = "INSTRUCTOR_TABLE";
     public static final String COLUMN_ID = "ID";
@@ -21,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INSTRUCTOR_USERNAME = "INSTRUCTOR_USERNAME";
     public static final String COLUMN_INSTRUCTOR_PASSWORD = "INSTRUCTOR_PASSWORD";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public InstructorDatabaseHelper(@Nullable Context context) {
         super(context, "instructor.db", null, 1);
     }
 
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
-    public List<InstructorModel> getEveryone(){
+    public List<InstructorModel> getInstructors(){
         List<InstructorModel> returnList = new ArrayList<>();
 
         // get data from database

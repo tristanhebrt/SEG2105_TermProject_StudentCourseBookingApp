@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "Welcome" + StudentDatabaseHelper.COLUMN_STUDENT_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
                     openStudentHome();
 
-                } else if (DatabaseHelper.COLUMN_INSTRUCTOR_USERNAME.contains(username.getText().toString()) && DatabaseHelper.COLUMN_INSTRUCTOR_PASSWORD.contains(password.getText().toString())) {
-                    Toast.makeText(MainActivity.this, "Welcome" + DatabaseHelper.COLUMN_INSTRUCTOR_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as an instructor", Toast.LENGTH_SHORT).show();
+                } else if (InstructorDatabaseHelper.COLUMN_INSTRUCTOR_USERNAME.contains(username.getText().toString()) && InstructorDatabaseHelper.COLUMN_INSTRUCTOR_PASSWORD.contains(password.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Welcome" + InstructorDatabaseHelper.COLUMN_INSTRUCTOR_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as an instructor", Toast.LENGTH_SHORT).show();
                     openInstructorHome();
 
                 } else {

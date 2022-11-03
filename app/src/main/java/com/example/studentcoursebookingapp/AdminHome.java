@@ -17,7 +17,7 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
     Button btn_createCourse, btn_editCourse, btn_deleteCourse, btn_viewInstructors, btn_viewStudents;
     ListView lv_instructorList;
     ListView lv_studentList;
-    DatabaseHelper databaseHelper;
+    InstructorDatabaseHelper instructorDatabaseHelper;
     StudentDatabaseHelper studentDatabaseHelper;
     ArrayAdapter instructorArrayAdapter;
     ArrayAdapter studentArrayAdapter;
@@ -42,8 +42,8 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 InstructorModel clickedInstructor = (InstructorModel) parent.getItemAtPosition(position);
-                databaseHelper.deleteInstructorAccount(clickedInstructor);
-                ShowInstructorsOnListView(databaseHelper);
+                instructorDatabaseHelper.deleteInstructorAccount(clickedInstructor);
+                ShowInstructorsOnListView(instructorDatabaseHelper);
                 Toast.makeText(AdminHome.this, "Deleted instructor " + clickedInstructor.toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -82,8 +82,8 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
             case R.id.viewInstructors:
                 lv_studentList.setVisibility(View.GONE);
                 lv_instructorList.setVisibility(View.VISIBLE);
-                databaseHelper = new DatabaseHelper(AdminHome.this);
-                ShowInstructorsOnListView(databaseHelper);
+                instructorDatabaseHelper = new InstructorDatabaseHelper(AdminHome.this);
+                ShowInstructorsOnListView(instructorDatabaseHelper);
 
                 break;
             case R.id.viewStudents:
@@ -96,15 +96,15 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
 
     }
 
-    private void ShowInstructorsOnListView(DatabaseHelper databaseHelper) {
+    private void ShowInstructorsOnListView(InstructorDatabaseHelper instructorDatabaseHelper) {
 
-        instructorArrayAdapter = new ArrayAdapter<InstructorModel>(AdminHome.this, android.R.layout.simple_list_item_1, databaseHelper.getEveryone());
+        instructorArrayAdapter = new ArrayAdapter<InstructorModel>(AdminHome.this, android.R.layout.simple_list_item_1, instructorDatabaseHelper.getInstructors());
         lv_instructorList.setAdapter(instructorArrayAdapter);
     }
 
     private void ShowStudentsOnListView(StudentDatabaseHelper studentDatabaseHelper) {
 
-        studentArrayAdapter = new ArrayAdapter<StudentModel>(AdminHome.this, android.R.layout.simple_list_item_1, studentDatabaseHelper.getEveryone());
+        studentArrayAdapter = new ArrayAdapter<StudentModel>(AdminHome.this, android.R.layout.simple_list_item_1, studentDatabaseHelper.getStudents());
         lv_studentList.setAdapter(studentArrayAdapter);
     }
 }

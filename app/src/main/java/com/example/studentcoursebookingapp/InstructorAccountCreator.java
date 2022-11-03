@@ -2,15 +2,11 @@ package com.example.studentcoursebookingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 public class InstructorAccountCreator extends AppCompatActivity {
 
@@ -48,9 +44,9 @@ public class InstructorAccountCreator extends AppCompatActivity {
                     instructorModel = new InstructorModel(-1, "error", "error", "error", "error", "error");
                 }
 
-                DatabaseHelper databaseHelper = new DatabaseHelper(InstructorAccountCreator.this);
+                InstructorDatabaseHelper instructorDatabaseHelper = new InstructorDatabaseHelper(InstructorAccountCreator.this);
 
-                boolean success = databaseHelper.createInstructorAccount(instructorModel);
+                boolean success = instructorDatabaseHelper.createInstructorAccount(instructorModel);
 
                 Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
             }

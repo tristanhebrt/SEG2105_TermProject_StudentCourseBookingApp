@@ -66,7 +66,7 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
-    public List<StudentModel> getEveryone(){
+    public List<StudentModel> getStudents(){
         List<StudentModel> returnList = new ArrayList<>();
 
         // get data from database
