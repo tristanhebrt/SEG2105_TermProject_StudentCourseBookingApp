@@ -35,16 +35,24 @@ public class InstructorAccountCreator extends AppCompatActivity {
         btn_createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                InstructorModel instructorModel;
+
                 try {
-                    InstructorModel instructorModel = new InstructorModel(-1, et_firstName.getText().toString(), et_lastName.getText().toString(),
+                    instructorModel = new InstructorModel(-1, et_firstName.getText().toString(), et_lastName.getText().toString(),
                             et_email.getText().toString(), et_username.getText().toString(), et_password.getText().toString());
                     Toast.makeText(InstructorAccountCreator.this, "ACCOUNT CREATED", Toast.LENGTH_SHORT).show();
 
                 }catch (Exception e){
                     Toast.makeText(InstructorAccountCreator.this, "INVALID INFORMATION", Toast.LENGTH_SHORT).show();
+                    instructorModel = new InstructorModel(-1, "error", "error", "error", "error", "error");
                 }
 
                 DatabaseHelper databaseHelper = new DatabaseHelper(InstructorAccountCreator.this);
+
+                boolean success = databaseHelper.createInstructorAccount(instructorModel);
+
+                Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
             }
         });
     }
