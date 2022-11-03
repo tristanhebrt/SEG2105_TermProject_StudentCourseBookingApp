@@ -57,6 +57,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
+    public boolean deleteInstructorAccount(InstructorModel instructorModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + INSTRUCTOR_TABLE + "WHERE " + COLUMN_ID + " = " + instructorModel.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        return cursor.moveToFirst();
+    }
+
     public List<InstructorModel> getEveryone(){
         List<InstructorModel> returnList = new ArrayList<>();
 
@@ -78,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InstructorModel newInstructor = new InstructorModel(id, firstName, lastName, email, username, password);
                 returnList.add(newInstructor);
 
-            }while (cursor.moveToFirst());
+            }while (cursor.moveToNext());
 
         }else{
             // failure don't add anything
