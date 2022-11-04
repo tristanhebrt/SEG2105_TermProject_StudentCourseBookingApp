@@ -3,11 +3,9 @@ package com.example.studentcoursebookingapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -15,9 +13,10 @@ import java.util.List;
 
 public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String COURSE_TABLE = "COURSE_TABLE";
-    public static final String COLUMN_COURSE_ID = "COURSE_TABLE";
-    public static final int COLUMN_COURSE_CODE = Integer.parseInt("COURSE_CODE");
+    public static final String TABLE_NAME = "COURSE_TABLE";
+    public static final String COLUMN_COURSE_ID = "ID";
+
+    public static final String COLUMN_COURSE_CODE = "COURSE_CODE";
     public static final String COLUMN_COURSE_NAME = "COURSE_NAME";
 
     public CourseDatabaseHelper(@Nullable Context context) {
@@ -26,8 +25,12 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + COURSE_TABLE + " (" + COLUMN_COURSE_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_COURSE_CODE + " INTEGER, " + COLUMN_COURSE_NAME + "TEXT)");
+        String createTableStatement = "CREATE TABLE " + TABLE_NAME + " ("
+                + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_COURSE_CODE + " INTEGER, "
+                + COLUMN_COURSE_NAME + " TEXT )";
+
+        db.execSQL(createTableStatement);
     }
 
     @Override
@@ -35,19 +38,20 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void createCourse(CourseModel courseModel){
+    public boolean createCourse(CourseModel courseModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(String.valueOf(COLUMN_COURSE_CODE), courseModel.getCourseCode());
         cv.put(COLUMN_COURSE_NAME, courseModel.getCourseName());
 
-        long insert = db.insert(COURSE_TABLE, null, cv);
+        long insert = db.insert(TABLE_NAME, null, cv);
+        return insert != -1;
     }
 
     public boolean deleteCourse(CourseModel courseModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + COURSE_TABLE + " WHERE " + COLUMN_COURSE_ID + " = " + courseModel.getCourseId();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = " + courseModel.getCourseId();
 
         Cursor cursor = db.rawQuery(queryString, null);
 
@@ -58,7 +62,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         List<CourseModel> returnList = new ArrayList<>();
 
         // get data from database
-        String queryString = "SELECT * FROM " + COURSE_TABLE;
+        String queryString = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 

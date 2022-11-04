@@ -48,7 +48,7 @@ public class InstructorAccountCreator extends AppCompatActivity {
 
                 boolean success = instructorDatabaseHelper.createInstructorAccount(instructorModel);
 
-                Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
             }
         });
     }

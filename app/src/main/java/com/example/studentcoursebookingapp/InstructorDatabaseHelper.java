@@ -15,6 +15,7 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String INSTRUCTOR_TABLE = "INSTRUCTOR_TABLE";
     public static final String COLUMN_ID = "ID";
+
     public static final String COLUMN_INSTRUCTOR_FIRSTNAME = "INSTRUCTOR_FIRSTNAME";
     public static final String COLUMN_INSTRUCTOR_LASTNAME = "INSTRUCTOR_LASTNAME";
     public static final String COLUMN_INSTRUCTOR_EMAIL = "INSTRUCTOR_EMAIL";
@@ -53,7 +54,6 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_INSTRUCTOR_PASSWORD, instructorModel.getPassword());
 
         long insert = db.insert(INSTRUCTOR_TABLE, null, cv);
-
         return insert != -1;
     }
 

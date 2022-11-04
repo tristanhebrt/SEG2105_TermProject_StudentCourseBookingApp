@@ -3,6 +3,7 @@ package com.example.studentcoursebookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,26 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
     public void onClick(View view){
         switch (view.getId()){
             case R.id.createCourse:
-                Toast.makeText(this, "CREATE COURSE", Toast.LENGTH_SHORT).show();
+
+                // Toast.makeText(this, "CREATE COURSE", Toast.LENGTH_SHORT).show();
+
+                CourseModel courseModel;
+
+                try {
+                    courseModel = new CourseModel(-1, Integer.parseInt(et_courseCode.getText().toString()), et_courseName.getText().toString());
+                    Toast.makeText(AdminCourseOptions.this, "COURSE CREATED", Toast.LENGTH_SHORT).show();
+
+                }catch (Exception e){
+                    Toast.makeText(AdminCourseOptions.this, "INVALID INFORMATION", Toast.LENGTH_SHORT).show();
+                    courseModel = new CourseModel(-1, -1, "error");
+                }
+
+                CourseDatabaseHelper courseDatabaseHelper = new CourseDatabaseHelper(AdminCourseOptions.this);
+
+                boolean success = courseDatabaseHelper.createCourse(courseModel);
+
+                // Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.deleteCourse:
                 Toast.makeText(this, "DELETE COURSE", Toast.LENGTH_SHORT).show();
@@ -52,8 +72,14 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
                 Toast.makeText(this, "EDIT COURSE", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cancelCourseOptions:
-                Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
+                openAdminHome();
+                // Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public void openAdminHome() {
+        Intent intent = new Intent(this, AdminHome.class);
+        startActivity(intent);
     }
 }

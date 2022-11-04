@@ -52,7 +52,7 @@ public class StudentAccountCreator extends AppCompatActivity {
 
                 boolean success = studentDatabaseHelper.createStudentAccount(studentModel);
 
-                Toast.makeText(StudentAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(StudentAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
             }
         });
     }
