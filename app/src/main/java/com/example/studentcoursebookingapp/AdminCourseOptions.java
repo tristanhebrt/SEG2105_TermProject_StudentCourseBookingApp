@@ -6,8 +6,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -15,12 +17,15 @@ import java.util.Arrays;
 public class AdminCourseOptions extends AppCompatActivity implements View.OnClickListener {
     Button btn_createCourse, btn_deleteCourse, btn_editCourse, btn_cancel;
     EditText et_courseCode, et_courseName;
+    ListView lv_courseList;
+    CourseDatabaseHelper courseDatabaseHelper;
+    ArrayAdapter courseArrayAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_create_course_pop_up);
+        setContentView(R.layout.activity_admin_course_options);
 
         btn_createCourse = (Button) findViewById(R.id.createCourse);
         btn_deleteCourse = (Button) findViewById(R.id.deleteCourse);
@@ -31,6 +36,10 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
         et_courseCode = (EditText) findViewById(R.id.courseCode);
         et_courseName = (EditText) findViewById(R.id.courseName);
 
+        lv_courseList = (ListView) findViewById(R.id.courseList);
+
+        courseDatabaseHelper = new CourseDatabaseHelper(AdminCourseOptions.this);
+        ShowCoursesOnListView(courseDatabaseHelper);
     }
 
     private void setClickListeners() {
@@ -81,5 +90,10 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
     public void openAdminHome() {
         Intent intent = new Intent(this, AdminHome.class);
         startActivity(intent);
+    }
+
+    private void ShowCoursesOnListView(CourseDatabaseHelper instructorDatabaseHelper) {
+        courseArrayAdapter = new ArrayAdapter<CourseModel>(AdminCourseOptions.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getCourses());
+        lv_courseList.setAdapter(courseArrayAdapter);
     }
 }

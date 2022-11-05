@@ -15,12 +15,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="102dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="98dp"
-        android:layout_marginBottom="526dp"
-        android:ems="10"
         android:layout_centerInParent="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="658dp"
+        android:ems="10"
         android:hint="Course Code"
         android:inputType="text"
         android:textColor="@color/white" />
@@ -33,11 +33,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginBottom="466dp"
         android:layout_centerInParent="true"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginBottom="603dp"
         android:hint="Course Name"
         android:inputType="text"
         android:textColor="@color/white" />
@@ -49,11 +49,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="321dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="149dp"
         android:layout_centerInParent="true"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginBottom="338dp"
         android:orientation="vertical">
 
         <Button
@@ -92,5 +92,21 @@
             android:text="Cancel"
             android:textColor="@color/white" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/courseList"
+
+        android:layout_width="match_parent"
+        android:layout_height="303dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="411dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
+        android:background="#6BFFFFFF" />
+
 
 </RelativeLayout>
