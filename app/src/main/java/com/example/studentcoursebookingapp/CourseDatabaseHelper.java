@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.Editable;
 
 import androidx.annotation.Nullable;
 
@@ -51,9 +52,9 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
-    public boolean deleteCourse(CourseModel courseModel){
+    public boolean deleteCourse(int courseID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = " + courseModel.getCourseId();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
 
         Cursor cursor = db.rawQuery(queryString, null);
 
@@ -86,9 +87,10 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public Cursor getCourseID(int courseCode, String courseName){
+    public Cursor getCourseID(Editable courseCode, String courseName){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = " SELECT " + COLUMN_COURSE_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " + COLUMN_COURSE_NAME + " = '" + courseName + "' ";
+
         Cursor data = db.rawQuery(query, null);
         return data;
     }

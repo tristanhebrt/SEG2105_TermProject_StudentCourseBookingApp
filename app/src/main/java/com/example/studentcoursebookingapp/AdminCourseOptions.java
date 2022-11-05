@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
     EditText et_courseCode, et_courseName;
     ListView lv_courseList;
     CourseDatabaseHelper courseDatabaseHelper;
+    CourseDatabaseHelper courseDatabaseHelper2;
     ArrayAdapter courseArrayAdapter;
 
     @SuppressLint("MissingInflatedId")
@@ -55,6 +57,8 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
         });
 
         courseDatabaseHelper = new CourseDatabaseHelper(AdminCourseOptions.this);
+        courseDatabaseHelper2 = new CourseDatabaseHelper(AdminCourseOptions.this);
+
         ShowCoursesOnListView(courseDatabaseHelper);
     }
 
@@ -91,8 +95,23 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
 
                 break;
             case R.id.deleteCourse:
+                Editable courseCode = et_courseCode.getText();
+                String courseName = String.valueOf(et_courseName.getText());
 
-                Toast.makeText(this, "DELETE COURSE", Toast.LENGTH_SHORT).show();
+                Cursor data = courseDatabaseHelper2.getCourseID(courseCode, courseName);
+
+                int courseID = -1;
+
+                while(data.moveToNext()) courseID = data.getInt(0);
+
+                if(courseID > -1){
+                    courseDatabaseHelper2.deleteCourse(courseID);
+                    ShowCoursesOnListView(courseDatabaseHelper2);
+                }
+
+
+
+                Toast.makeText(this, courseCode + " " + courseName, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.editCourse:
                 Toast.makeText(this, "EDIT COURSE", Toast.LENGTH_SHORT).show();
