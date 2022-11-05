@@ -17,10 +17,10 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_ID = "ID";
 
     public static final String COLUMN_COURSE_CODE = "COURSE_CODE";
-    public static final String COLUMN_COURSE_NAME = "COURSE_NAME";
+    public static final String COLUMN_COURSE_NAME = "COURSE_NAMETEXT";
 
     public CourseDatabaseHelper(@Nullable Context context) {
-        super(context, "course.db", null, 1);
+        super(context, "course.db", null, 2);
     }
 
     @Override
@@ -35,7 +35,9 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); // drop older table
 
+        onCreate(sqLiteDatabase); // create table again
     }
 
     public boolean createCourse(CourseModel courseModel){
