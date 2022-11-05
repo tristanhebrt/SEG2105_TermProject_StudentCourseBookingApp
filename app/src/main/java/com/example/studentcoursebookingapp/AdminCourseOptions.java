@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.DataOutputStream;
 import java.util.Arrays;
 
 public class AdminCourseOptions extends AppCompatActivity implements View.OnClickListener {
@@ -37,6 +40,19 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
         et_courseName = (EditText) findViewById(R.id.courseName);
 
         lv_courseList = (ListView) findViewById(R.id.courseList);
+
+        lv_courseList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
+
+                et_courseCode.setText(String.valueOf(clickedCourse.getCourseCode()));
+                et_courseCode.isEnabled();
+                et_courseName.setText(clickedCourse.getCourseName());
+                et_courseName.isEnabled();
+
+            }
+        });
 
         courseDatabaseHelper = new CourseDatabaseHelper(AdminCourseOptions.this);
         ShowCoursesOnListView(courseDatabaseHelper);
@@ -75,6 +91,7 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
 
                 break;
             case R.id.deleteCourse:
+
                 Toast.makeText(this, "DELETE COURSE", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.editCourse:

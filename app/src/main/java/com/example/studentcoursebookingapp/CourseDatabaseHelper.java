@@ -85,4 +85,11 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public Cursor getCourseID(int courseCode, String courseName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT " + COLUMN_COURSE_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " + COLUMN_COURSE_NAME + " = '" + courseName + "' ";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
 }
