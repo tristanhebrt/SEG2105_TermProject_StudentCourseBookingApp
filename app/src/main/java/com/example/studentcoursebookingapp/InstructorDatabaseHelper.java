@@ -96,4 +96,39 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public boolean checkInstructorAccount(String username, String password){
+        String queryString = " SELECT * FROM " + INSTRUCTOR_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        boolean isInstructor = false;
+
+        if(cursor.moveToFirst()){
+            do{
+                String usernameCheck = cursor.getString(4);
+                String passwordCheck = cursor.getString(5);
+
+                if(username.equals(usernameCheck) && password.equals(passwordCheck)){
+                    isInstructor = true;
+                }
+
+            }while (cursor.moveToNext());
+
+        }else{
+            isInstructor = false;
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return isInstructor;
+    }
+
+    public Cursor getInstructorID(String username, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT " + COLUMN_ID + " FROM " + INSTRUCTOR_TABLE + " WHERE " +
+                COLUMN_INSTRUCTOR_USERNAME + " = '" + username + "' AND " + COLUMN_INSTRUCTOR_PASSWORD + " = '" + password + "' ";
+
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 }

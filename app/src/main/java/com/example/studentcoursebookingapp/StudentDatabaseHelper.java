@@ -1,5 +1,6 @@
 package com.example.studentcoursebookingapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,7 +23,7 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_STUDENT_PASSWORD = "INSTRUCTOR_PASSWORD";
 
     public StudentDatabaseHelper(@Nullable Context context) {
-        super(context, "student.db", null, 1);
+        super(context, "student.db", null, 2);
     }
 
     // called when the database is first accessed
@@ -95,5 +96,50 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();   // cleanup
         db.close();
         return returnList;
+    }
+
+    public boolean checkStudentAccount(String username, String password){
+        String queryString = " SELECT * FROM " + STUDENT_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        boolean isStudent = false;
+
+        if(cursor.moveToFirst()){
+            do{
+                String usernameCheck = cursor.getString(4);
+                String passwordCheck = cursor.getString(5);
+
+                if(username.equals(usernameCheck) && password.equals(passwordCheck)){
+                    isStudent = true;
+                }
+
+            }while (cursor.moveToNext());
+
+        }else{
+            isStudent = false;
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return isStudent;
+    }
+
+    public Cursor getStudentID(String username, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT " + COLUMN_ID + " FROM " + STUDENT_TABLE + " WHERE " +
+                COLUMN_STUDENT_USERNAME + " = '" + username + "' AND " + COLUMN_STUDENT_PASSWORD + " = '" + password + "' ";
+
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    public Cursor getStudentFirstName(int ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT " + COLUMN_STUDENT_FIRSTNAME + " FROM " + STUDENT_TABLE + " WHERE " +
+                COLUMN_ID + " = '" + ID + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+        @SuppressLint("Range") String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_STUDENT_FIRSTNAME));
+        return cursor;
     }
 }

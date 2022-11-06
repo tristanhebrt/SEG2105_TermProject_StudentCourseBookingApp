@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,22 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextView username, password;
     Button createAccount, login;
+    public int currentID;
+    public boolean isStudent;
+    public boolean isInstructor;
+    public boolean isAdmin;
+    StudentDatabaseHelper studentDatabaseHelper;
+    InstructorDatabaseHelper instructorDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        isStudent = false;
+        isInstructor = false;
+        isAdmin = false;
 
         username = (TextView) findViewById(R.id.username);
         password = (TextView) findViewById(R.id.password);
@@ -28,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = (Button) findViewById(R.id.login);
 
         setClickListeners();
+        studentDatabaseHelper = new StudentDatabaseHelper(MainActivity.this);
+        instructorDatabaseHelper = new InstructorDatabaseHelper(MainActivity.this);
     }
 
     private void setClickListeners() {
@@ -46,17 +60,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.login:
+                String inputUsername = username.getText().toString();
+                String inputPassword = password.getText().toString();
 
-                if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin123")) {     // if the <TextView username> is admin <TextView password> is admin123
-                    Toast.makeText(MainActivity.this, "Welcome! You are logged in as Admin", Toast.LENGTH_SHORT).show();     // notify "Welcome! You are logged in as Admin"
+                if (inputUsername.equals("admin") && inputPassword.equals("admin123")) {     // if the <TextView username> is admin <TextView password> is admin123
+                    Toast.makeText(MainActivity.this, "Welcome Admin! You are logged in as Admin", Toast.LENGTH_SHORT).show();     // notify "Welcome! You are logged in as Admin"
+                    isAdmin = true;
                     openAdminHome();
+                } else if (studentDatabaseHelper.checkStudentAccount(inputUsername, inputPassword)) {
 
-                } else if (StudentDatabaseHelper.COLUMN_STUDENT_USERNAME.contains(username.getText().toString()) && StudentDatabaseHelper.COLUMN_STUDENT_PASSWORD.contains(password.getText().toString())) {
-                    Toast.makeText(MainActivity.this, "Welcome" + StudentDatabaseHelper.COLUMN_STUDENT_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
+                    Cursor data = studentDatabaseHelper.getStudentID(inputUsername, inputPassword);
+                    int courseID = -1;
+                    while(data.moveToNext()) courseID = data.getInt(0);
+                    if(courseID > -1){
+                        currentID = courseID;
+                    }
+
+                    Cursor firstName = studentDatabaseHelper.getStudentFirstName(currentID);
+
+                    Toast.makeText(MainActivity.this, "Welcome" + firstName + " / " + inputUsername + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
+                    isStudent = true;
                     openStudentHome();
 
-                } else if (InstructorDatabaseHelper.COLUMN_INSTRUCTOR_USERNAME.contains(username.getText().toString()) && InstructorDatabaseHelper.COLUMN_INSTRUCTOR_PASSWORD.contains(password.getText().toString())) {
-                    Toast.makeText(MainActivity.this, "Welcome" + InstructorDatabaseHelper.COLUMN_INSTRUCTOR_FIRSTNAME + "/" + username.getText().toString() + "! You are logged in as an instructor", Toast.LENGTH_SHORT).show();
+                } else if (instructorDatabaseHelper.checkInstructorAccount(inputUsername, inputPassword)) {
+
+                    Cursor data = instructorDatabaseHelper.getInstructorID(inputUsername, inputPassword);
+                    int courseID = -1;
+                    while(data.moveToNext()) courseID = data.getInt(0);
+                    if(courseID > -1){
+                        currentID = courseID;
+                    }
+
+                    String firstName = ""; // need to implement firstName getter
+
+                    Toast.makeText(MainActivity.this, "Welcome" + firstName + " / " + inputUsername + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
+                    isInstructor = true;
                     openInstructorHome();
 
                 } else {
