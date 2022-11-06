@@ -9,13 +9,13 @@
 
     <EditText
         android:id="@+id/courseCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="374dp"
+        android:layout_height="55dp"
         android:layout_above="@+id/courseName"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="43dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="15dp"
         android:ems="10"

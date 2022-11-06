@@ -2,11 +2,11 @@ package com.example.studentcoursebookingapp;
 
 public class CourseModel {
     private int courseId;
-    private int courseCode;
+    private String courseCode;
     private String courseName;
 
     // constructors
-    public CourseModel(int courseId, int courseCode, String courseName) {
+    public CourseModel(int courseId, String courseCode, String courseName) {
         this.courseId = courseId;
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -31,11 +31,11 @@ public class CourseModel {
         this.courseId = courseId;
     }
 
-    public int getCourseCode() {
+    public String getCourseCode() {
         return courseCode;
     }
 
-    public void setCourseCode(int courseCode) {
+    public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
     }
 

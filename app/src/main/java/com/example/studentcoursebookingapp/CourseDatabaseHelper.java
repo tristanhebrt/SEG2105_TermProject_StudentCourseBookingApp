@@ -72,7 +72,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 int courseId = cursor.getInt(0);
-                int courseCode = cursor.getInt(1);
+                String courseCode = cursor.getString(1);
                 String courseName = cursor.getString(2);
 
                 CourseModel newCourse = new CourseModel(courseId, courseCode, courseName);
@@ -87,11 +87,54 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public Cursor getCourseID(Editable courseCode, String courseName){
+    public Cursor getCourseID(String courseCode, String courseName){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT " + COLUMN_COURSE_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " + COLUMN_COURSE_NAME + " = '" + courseName + "' ";
+        String query = " SELECT " + COLUMN_COURSE_ID + " FROM " + TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " + COLUMN_COURSE_NAME + " = '" + courseName + "' ";
 
         Cursor data = db.rawQuery(query, null);
         return data;
     }
+
+    public void updateCourseCode(int courseID, String newCourseCode){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_CODE + " = '" +
+                newCourseCode + "' WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        db.execSQL(query);
+    }
+
+    public void updateCourseName(int courseID,String newCourseName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_NAME + " = '" +
+                newCourseName + "' WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        db.execSQL(query);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
