@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         currentID = courseID;
                     }
 
-                    Cursor firstName = studentDatabaseHelper.getStudentFirstName(currentID);
+                    String firstName = "student"; // need to implement firstName getter
 
                     Toast.makeText(MainActivity.this, "Welcome" + firstName + " / " + inputUsername + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
                     isStudent = true;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         currentID = courseID;
                     }
 
-                    String firstName = ""; // need to implement firstName getter
+                    String firstName = "instructor"; // need to implement firstName getter
 
                     Toast.makeText(MainActivity.this, "Welcome" + firstName + " / " + inputUsername + "! You are logged in as a student" , Toast.LENGTH_SHORT).show();
                     isInstructor = true;

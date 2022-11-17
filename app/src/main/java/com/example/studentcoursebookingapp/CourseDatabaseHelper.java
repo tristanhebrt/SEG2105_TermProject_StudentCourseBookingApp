@@ -52,15 +52,6 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
-    public boolean deleteCourse(int courseID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        return cursor.moveToFirst();
-    }
-
     public List<CourseModel> getCourses(){
         List<CourseModel> returnList = new ArrayList<>();
 
@@ -85,6 +76,15 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
+
+    public boolean deleteCourse(int courseID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        return cursor.moveToFirst();
     }
 
     public Cursor getCourseID(String courseCode, String courseName){

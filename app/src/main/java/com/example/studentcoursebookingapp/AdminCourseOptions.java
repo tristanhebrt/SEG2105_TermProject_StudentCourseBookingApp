@@ -73,6 +73,7 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
         switch (view.getId()){
             case R.id.createCourse:
                 // Toast.makeText(this, "CREATE COURSE", Toast.LENGTH_SHORT).show();
+                ShowCoursesOnListView(courseDatabaseHelper);
                 CourseModel courseModel;
 
                 try {
@@ -83,8 +84,6 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
                     Toast.makeText(AdminCourseOptions.this, "INVALID INFORMATION", Toast.LENGTH_SHORT).show();
                     courseModel = new CourseModel(-1, "error", "error");
                 }
-
-                CourseDatabaseHelper courseDatabaseHelper = new CourseDatabaseHelper(AdminCourseOptions.this);
 
                 ShowCoursesOnListView(courseDatabaseHelper);
 
