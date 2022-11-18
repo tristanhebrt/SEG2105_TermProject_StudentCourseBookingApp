@@ -17,4 +17,10 @@
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
     <string name="email">Email</string>
+    <string name="add_course">Add Course</string>
+    <string name="view_courses">View Courses</string>
+    <string name="edit_Assigned_Course">Edit Course</string>
+    <string name="unassign_Course">Unassign Course</string>
+    <string name="assign_Course">Assign Course</string>
+    <string name="search_Course">Search Coiurse</string>
 </resources>
