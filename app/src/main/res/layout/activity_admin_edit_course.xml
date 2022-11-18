@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/newCourseName"
         android:layout_alignParentTop="true"
+
         android:layout_marginLeft="20dp"
         android:layout_marginTop="270dp"
         android:layout_marginRight="20dp"
@@ -20,7 +21,9 @@
         android:ems="10"
         android:hint="New Course Code"
         android:inputType="text"
-        android:textColor="@color/white" />
+        android:minHeight="48dp"
+        android:textColor="@color/white"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/newCourseName"
@@ -32,6 +35,7 @@
         android:layout_marginBottom="21dp"
         android:hint="New Course Name"
         android:inputType="text"
+        android:minHeight="48dp"
         android:textColor="@color/white" />
 
     <Button
