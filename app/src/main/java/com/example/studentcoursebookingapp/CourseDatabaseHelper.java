@@ -14,6 +14,8 @@ import java.util.List;
 
 public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
+    MainActivity mainActivity = new MainActivity();
+
     public static final String TABLE_NAME = "COURSE_TABLE";
     public static final String COLUMN_COURSE_ID = "ID";
 
@@ -21,6 +23,8 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_NAME = "COURSE_NAMETEXT";
 
     public static final String COLUMN_COURSE_INSTRUCTOR = "COURSE_INSTRUCTOR";
+    public static final String COLUMN_COURSE_INSTRUCTOR_ID = "COURSE_INSTRUCTOR_ID";
+
     public static final String COLUMN_COURSE_DAYS = "COURSE_DAYS";
     public static final String COLUMN_COURSE_HOURS = "COURSE_HOURS";
     public static final String COLUMN_COURSE_DESCRIPTION = "COURSE_DESCRIPTION";
@@ -29,7 +33,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_ENROLLED = "COURSE_ENROLLED";
 
     public CourseDatabaseHelper(@Nullable Context context) {
-        super(context, "course.db", null, 4);
+        super(context, "course.db", null, 5);
     }
 
     @Override
@@ -41,6 +45,8 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_COURSE_NAME + " TEXT, "
 
                 + COLUMN_COURSE_INSTRUCTOR + " TEXT, "
+                + COLUMN_COURSE_INSTRUCTOR_ID + " INTEGER, "
+
                 + COLUMN_COURSE_DAYS + " TEXT, "
                 + COLUMN_COURSE_HOURS + " TEXT, "
                 + COLUMN_COURSE_DESCRIPTION + " TEXT, "
@@ -83,16 +89,20 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
                 String courseCode = cursor.getString(1);
                 String courseName = cursor.getString(2);
+
                 String courseInstructor = cursor.getString(3);
-                String courseDays = cursor.getString(4);
-                String courseHours = cursor.getString(5);
-                String courseDescription = cursor.getString(5);
+                int courseInstructorId = cursor.getInt(4);
 
-                int courseCapacity = cursor.getInt(6);
-                int courseEnrolled = cursor.getInt(7);
+                String courseDays = cursor.getString(5);
+                String courseHours = cursor.getString(6);
+
+                String courseDescription = cursor.getString(7);
+
+                int courseCapacity = cursor.getInt(8);
+                int courseEnrolled = cursor.getInt(9);
 
 
-                CourseModel newCourse = new CourseModel(courseId, courseCode, courseName, courseInstructor, courseDays,
+                CourseModel newCourse = new CourseModel(courseId, courseCode, courseName, courseInstructor, courseInstructorId, courseDays,
                         courseHours, courseDescription, courseCapacity, courseEnrolled);
                 returnList.add(newCourse);
 
@@ -101,6 +111,46 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
             // failed
         }
         cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public List<CourseModel> getMyCourses(){
+        List<CourseModel> returnList = new ArrayList<>();
+
+        // get data from database
+
+        String queryString = " SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_INSTRUCTOR_ID + " = " + mainActivity.getCurrentId();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int courseId = cursor.getInt(0);
+                String courseCode = cursor.getString(1);
+                String courseName = cursor.getString(2);
+
+                String courseInstructor = cursor.getString(3);
+                int courseInstructorId = cursor.getInt(4);
+
+                String courseDays = cursor.getString(5);
+                String courseHours = cursor.getString(6);
+
+                String courseDescription = cursor.getString(7);
+
+                int courseCapacity = cursor.getInt(8);
+                int courseEnrolled = cursor.getInt(9);
+
+                CourseModel newCourse = new CourseModel(courseId, courseCode, courseName, courseInstructor, courseInstructorId, courseDays,
+                        courseHours, courseDescription, courseCapacity, courseEnrolled);
+                returnList.add(newCourse);
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
         db.close();
         return returnList;
     }
@@ -149,8 +199,9 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     public void removeInstructor(int courseID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_INSTRUCTOR + " = " + null + " , " + COLUMN_COURSE_DAYS + " = " + null + " , " + COLUMN_COURSE_HOURS+ " = " + null + " , " +
-                COLUMN_COURSE_DESCRIPTION + " = " + null + " , " + COLUMN_COURSE_CAPACITY + " = " + 0 + " WHERE " + COLUMN_COURSE_ID + " = " + courseID;
+        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_INSTRUCTOR + " = " + null + " , " + COLUMN_COURSE_INSTRUCTOR_ID + " = " + 0 + " , " +
+                COLUMN_COURSE_DAYS + " = " + null + " , " + COLUMN_COURSE_HOURS+ " = " + null + " , " + COLUMN_COURSE_DESCRIPTION + " = " + null + " , " +
+                COLUMN_COURSE_CAPACITY + " = " + 0 + " WHERE " + COLUMN_COURSE_ID + " = " + courseID;
 
         db.execSQL(query);
     }

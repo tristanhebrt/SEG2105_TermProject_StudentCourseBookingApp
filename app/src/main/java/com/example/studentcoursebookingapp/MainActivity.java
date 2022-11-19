@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     while(data.moveToNext()) courseID = data.getInt(0);
                     if(courseID > -1){
                         currentID = courseID;
+                        Toast.makeText(this, "current ID is " + currentID, Toast.LENGTH_SHORT).show(); // debug
                     }
 
                     String firstName = "student"; // need to implement firstName getter
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     while(data.moveToNext()) courseID = data.getInt(0);
                     if(courseID > -1){
                         currentID = courseID;
+                        Toast.makeText(this, "current ID is " + currentID, Toast.LENGTH_SHORT).show();  // debug
                     }
 
                     String firstName = "instructor"; // need to implement firstName getter
@@ -102,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    public Integer getCurrentId(){
+        return currentID;
     }
 
     public void openAdminHome() {

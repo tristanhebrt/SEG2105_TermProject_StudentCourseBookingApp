@@ -7,6 +7,8 @@ public class CourseModel {
     private String courseName;
 
     private String courseInstructor;
+    private int courseInstructorId;
+
     private String courseDays;
     private String courseHours;
     private String courseDescription;
@@ -15,12 +17,17 @@ public class CourseModel {
     private int courseEnrolled;
 
     // constructors
-    public CourseModel(int courseId, String courseCode, String courseName, String courseInstructor, String courseDays, String courseHours, String courseDescription, int courseCapacity, int courseEnrolled) {
+    public CourseModel(int courseId, String courseCode, String courseName, String courseInstructor, int courseInstructorId, String courseDays, String courseHours,
+                       String courseDescription, int courseCapacity, int courseEnrolled) {
+
         this.courseId = courseId;
 
         this.courseCode = courseCode;
         this.courseName = courseName;
+
         this.courseInstructor = courseInstructor;
+        this.courseInstructorId = courseInstructorId;
+
         this.courseDays = courseDays;
         this.courseHours = courseHours;
         this.courseDescription = courseDescription;
@@ -39,6 +46,7 @@ public class CourseModel {
                 ", courseCode='" + courseCode + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", courseInstructor='" + courseInstructor + '\'' +
+                ", courseInstructorId='" + courseInstructorId +
                 ", courseDays='" + courseDays + '\'' +
                 ", courseHours='" + courseHours + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
@@ -52,7 +60,6 @@ public class CourseModel {
     public int getCourseId() {
         return courseId;
     }
-
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
@@ -60,7 +67,6 @@ public class CourseModel {
     public String getCourseCode() {
         return courseCode;
     }
-
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
     }
@@ -68,7 +74,6 @@ public class CourseModel {
     public String getCourseName() {
         return courseName;
     }
-
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -76,15 +81,14 @@ public class CourseModel {
     public String getCourseInstructor() {
         return courseInstructor;
     }
+    public void setCourseInstructor(String courseInstructor) {this.courseInstructor = courseInstructor;}
 
-    public void setCourseInstructor(String courseInstructor) {
-        this.courseInstructor = courseInstructor;
-    }
+    public int getCourseInstructorId(){ return courseInstructorId; }
+    public void setCourseInstructorId(int courseInstructorId){ this.courseInstructorId = courseInstructorId; }
 
     public String getCourseDays() {
         return courseDays;
     }
-
     public void setCourseDays(String courseDays) {
         this.courseDays = courseDays;
     }
@@ -92,7 +96,6 @@ public class CourseModel {
     public String getCourseHours() {
         return courseHours;
     }
-
     public void setCourseHours(String courseHours) {
         this.courseHours = courseHours;
     }
@@ -100,15 +103,11 @@ public class CourseModel {
     public String getCourseDescription() {
         return courseDescription;
     }
-
-    public void setCourseDescription(String courseDescription) {
-        this.courseDescription = courseDescription;
-    }
+    public void setCourseDescription(String courseDescription) {this.courseDescription = courseDescription;}
 
     public int getCourseCapacity() {
         return courseCapacity;
     }
-
     public void setCourseCapacity(int courseCapacity) {
         this.courseCapacity = courseCapacity;
     }
@@ -116,7 +115,6 @@ public class CourseModel {
     public int getCourseEnrolled() {
         return courseEnrolled;
     }
-
     public void setCourseEnrolled(int courseEnrolled) {
         this.courseEnrolled = courseEnrolled;
     }
