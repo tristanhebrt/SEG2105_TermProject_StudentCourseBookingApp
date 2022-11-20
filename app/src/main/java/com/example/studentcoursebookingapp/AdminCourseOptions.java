@@ -72,28 +72,30 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
     public void onClick(View view){
         switch (view.getId()){
             case R.id.createCourse:
-                // Toast.makeText(this, "CREATE COURSE", Toast.LENGTH_SHORT).show();
-                ShowCoursesOnListView(courseDatabaseHelper);
+
                 CourseModel courseModel;
 
                 try {
-                    courseModel = new CourseModel(-1, et_courseCode.getText().toString(), et_courseName.getText().toString(), null,
-                            -1, null, null, -1, -1);
-                    Toast.makeText(AdminCourseOptions.this, "COURSE CREATED", Toast.LENGTH_SHORT).show();
+                    courseModel = new CourseModel(-1, et_courseCode.getText().toString(), et_courseName.getText().toString(), "",
+                            -1, "", "", -1, -1);
+                    Toast.makeText(AdminCourseOptions.this, "Course created", Toast.LENGTH_SHORT).show();
 
                 }catch (Exception e){
-                    Toast.makeText(AdminCourseOptions.this, "INVALID INFORMATION", Toast.LENGTH_SHORT).show();
-                    courseModel = new CourseModel(-1, "error", "error", "error", -1,
-                            "error", "error", -1, -1);
+                    Toast.makeText(AdminCourseOptions.this, "Invalid information", Toast.LENGTH_SHORT).show();
+                    courseModel = new CourseModel(-1, "", "", "", -1,
+                            "", "", -1, -1);
                 }
 
-                ShowCoursesOnListView(courseDatabaseHelper);
+                if (courseDatabaseHelper.createCourse(courseModel)) { }
+                else {
+                    Toast.makeText(this, "Error has occurred please try again.", Toast.LENGTH_SHORT).show();
+                }
 
-                boolean success;
-                if (courseDatabaseHelper.createCourse(courseModel)) success = true;
-                else success = false;
-                // Toast.makeText(InstructorAccountCreator.this, "Success"+success, Toast.LENGTH_SHORT).show();
+                ShowCoursesOnListView(courseDatabaseHelper); // Updates the course list
+
                 break;
+
+
 
             case R.id.deleteCourse:
                 String courseCode = String.valueOf(et_courseCode.getText());
@@ -117,13 +119,12 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(this, AdminEditCourse.class);
                 intent.putExtra("courseCode", String.valueOf(et_courseCode.getText()));
                 intent.putExtra("courseName", String.valueOf(et_courseName.getText()));
+
                 startActivity(intent);
-                // Toast.makeText(this, "EDIT COURSE", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.cancelCourseOptions:
                 openAdminHome();
-                // Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

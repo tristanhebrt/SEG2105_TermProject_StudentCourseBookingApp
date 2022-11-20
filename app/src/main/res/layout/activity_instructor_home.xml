@@ -5,115 +5,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminHome"
-    android:background="@drawable/background3">
+    android:background="#9E9E9E">
 
-    <Button
-        android:id="@+id/editSelectedCourse"
-        android:layout_width="276dp"
-        android:layout_height="49dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="69dp"
-
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="613dp"
-        android:layout_weight="1"
-        android:backgroundTint="#3B000000"
-        android:text="Edit Selected Course"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="312dp" />
-
-    <LinearLayout
-        android:id="@+id/listViewButtons"
+    <TextView
+        android:id="@+id/INSTRUCTOR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_alignParentStart="true"
+        android:layout_above="@+id/instructorHomeTable"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="131dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="528dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="58dp"
+        android:text="INSTRUCTOR"
+        android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/viewAllCourses"
-            android:layout_width="wrap_content"
+    <TableLayout
+        android:id="@+id/instructorHomeTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/allCoursesList"
+        android:layout_marginBottom="30dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/editSelectedCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="Edit Selected Course"
+                android:textColor="@color/white"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="#3B000000"
-            android:text="View All Courses"
-            android:textColor="@color/white"
+            android:layout_above="@+id/allCoursesList">
 
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="312dp" />
+            <Button
+                android:id="@+id/viewAllCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="View All Courses"
+                android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/viewMyCourses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="#3B000000"
-            android:text="View My Courses"
-            android:textColor="@color/white"
+            <Button
+                android:id="@+id/viewMyCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="View My Courses"
+                android:textColor="@color/white" />
+        </TableRow>
 
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="312dp" />
-    </LinearLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+            <EditText
+                android:id="@+id/searchCourseCodeInstructorHomeEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Course code"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/searchCourseNameInstructorHomeEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Course name"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/searchCourseInstructorHomeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="Search"
+                android:textColor="@color/white"/>
+
+    </TableLayout>
 
     <ListView
         android:id="@+id/allCoursesList"
 
-        android:layout_width="380dp"
-        android:layout_height="498dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="0dp"
         android:background="#6BFFFFFF" />
 
     <ListView
         android:id="@+id/myCoursesList"
 
-        android:layout_width="380dp"
-        android:layout_height="498dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="216dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"
-        android:background="#6BFFFFFF" />
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
 
-    <TextView
-        android:id="@+id/INSTRUCTOR"
-        android:layout_width="94dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="286dp"
-        android:layout_marginBottom="685dp"
-        android:text="INSTRUCTOR"
-        android:textColor="@color/white" />
+        android:layout_marginBottom="0dp"
+        android:background="#6BFFFFFF" />
 
 </RelativeLayout>

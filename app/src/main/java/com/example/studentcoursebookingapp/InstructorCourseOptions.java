@@ -147,53 +147,52 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
         if(mondayIsChecked){
             String start = et_mondayStart.getText().toString();
             String end = et_mondayEnd.getText().toString();
-            if (start != null && end != null) {
-                daysAndHours += "Monday from " + start + " to " + end + ". ";
-            }else{
+            if (start.equals("") || end.equals("")) {
                 return "error";
+            }else{
+                daysAndHours += "Monday from " + start + " to " + end + ". ";
             }
         }
 
         if(tuesdayIsChecked){
             String start = et_tuesdayStart.getText().toString();
             String end = et_tuesdayEnd.getText().toString();
-            if (start != null && end != null) {
-                daysAndHours += "Tuesday from " + start + " to " + end + ". ";
-            }else{
+            if (start.equals("") || end.equals("")) {
                 return "error";
+            }else{
+                daysAndHours += "Tuesday from " + start + " to " + end + ". ";
             }
         }
 
         if(wednesdayIsChecked){
             String start = et_wednesdayStart.getText().toString();
             String end = et_wednesdayEnd.getText().toString();
-            if (start != null && end != null) {
-                daysAndHours += "Wednesday from " + start + " to " + end + ". ";
-            }else{
+            if (start.equals("") || end.equals("")) {
                 return "error";
+            }else{
+                daysAndHours += "Wednesday from " + start + " to " + end + ". ";
             }
         }
 
         if(thursdayIsChecked){
             String start = et_thursdayStart.getText().toString();
             String end = et_thursdayEnd.getText().toString();
-            if (start != null && end != null) {
-                daysAndHours += "Thursday from " + start + " to " + end + ". ";
-            }else{
+            if (start.equals("") || end.equals("")) {
                 return "error";
+            }else{
+                daysAndHours += "Thursday from " + start + " to " + end + ". ";
             }
         }
 
         if(fridayIsChecked) {
             String start = et_fridayStart.getText().toString();
             String end = et_fridayEnd.getText().toString();
-            if (start != null && end != null) {
-                daysAndHours += "Friday from " + start + " to " + end + ". ";
-            } else {
+            if (start.equals("") || end.equals("")) {
                 return "error";
+            }else{
+                daysAndHours += "Friday from " + start + " to " + end + ". ";
             }
         }
-
         return daysAndHours;
     }
 }

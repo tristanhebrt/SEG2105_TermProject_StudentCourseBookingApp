@@ -34,7 +34,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_ENROLLED = "COURSE_ENROLLED";
 
     public CourseDatabaseHelper(@Nullable Context context) {
-        super(context, "course.db", null, 6);
+        super(context, "course.db", null, 7);
     }
 
     @Override

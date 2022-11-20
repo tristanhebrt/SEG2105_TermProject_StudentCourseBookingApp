@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InstructorCourseOptions">
+    tools:context=".InstructorCourseOptions"
+    android:background="#9E9E9E">
 
     <LinearLayout
         android:id="@+id/weekDaysLayout"
@@ -16,6 +17,8 @@
 
         <ToggleButton
             android:id="@+id/mondayToggleButton"
+            android:backgroundTint="#3B000000"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,6 +30,8 @@
 
         <ToggleButton
             android:id="@+id/tuesdayToggleButton"
+            android:backgroundTint="#3B000000"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,6 +43,8 @@
 
         <ToggleButton
             android:id="@+id/wednesdayToggleButton"
+            android:backgroundTint="#3B000000"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,6 +56,8 @@
 
         <ToggleButton
             android:id="@+id/thursdayToggleButton"
+            android:backgroundTint="#3B000000"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -60,6 +69,8 @@
 
         <ToggleButton
             android:id="@+id/fridayToggleButton"
+            android:backgroundTint="#3B000000"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -207,7 +218,7 @@
         android:layout_above="@+id/unAssignMyselfButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="17dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#3B000000"
         android:text="Assign myself as instructor" />
 
     <Button
@@ -217,7 +228,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="83dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#3B000000"
         android:text="Un-assign myself as instructor" />
 
 </RelativeLayout>
