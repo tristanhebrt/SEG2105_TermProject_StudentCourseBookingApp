@@ -10,19 +10,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 
 public class InstructorHome extends AppCompatActivity implements View.OnClickListener {
-    Button btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses;
-    ListView lv_allCourses, lv_myCourses;
+    Button btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search;
+    EditText et_courseCode, et_courseName;
+    ListView lv_allCourses, lv_myCourses, lv_searchedCourses;
     CourseDatabaseHelper courseDatabaseHelper;
-    ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter;
+    ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter, searchedCoursesArrayAdapter;
 
     public int selectedCourseId = -1;
     public int currentId;
+    String searchCode = null;
+    String searchName = null;
 
     MainActivity mainActivity = new MainActivity();
 
@@ -35,10 +39,15 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         btn_editSelectedCourse = (Button) findViewById(R.id.editSelectedCourse);
         btn_viewAllCourses = (Button) findViewById(R.id.viewAllCourses);
         btn_viewMyCourses = (Button) findViewById(R.id.viewMyCourses);
+        btn_search = (Button) findViewById(R.id.searchCourseInstructorHomeButton);
         setClickListeners();
+
+        et_courseCode = (EditText) findViewById(R.id.searchCourseCodeInstructorHomeEditText);
+        et_courseName = (EditText) findViewById(R.id.searchCourseNameInstructorHomeEditText);
 
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
+        lv_searchedCourses = (ListView) findViewById(R.id.searchedCoursesList);
 
         // Bundle extras = getIntent().getExtras();  getting user id from MainActivity
         // if (extras != null){ userId = extras.getInt("userId"); }
@@ -53,7 +62,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
                 selectedCourseId = clickedCourse.getCourseId();
-                Toast.makeText(InstructorHome.this, "course id = " + selectedCourseId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(InstructorHome.this, "Course selected", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -63,13 +72,22 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
                 selectedCourseId = clickedCourse.getCourseId();
-                Toast.makeText(InstructorHome.this, "course id = " + selectedCourseId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(InstructorHome.this, "Course selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lv_searchedCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
+                selectedCourseId = clickedCourse.getCourseId();
+                Toast.makeText(InstructorHome.this, "Course selected", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setClickListeners() {
-        for (Button button : Arrays.asList(btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses)){
+        for (Button button : Arrays.asList(btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search)){
             button.setOnClickListener(this);
         }
     }
@@ -95,16 +113,30 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
             case R.id.viewAllCourses:
                 lv_myCourses.setVisibility(View.GONE);
+                lv_searchedCourses.setVisibility(View.GONE);
                 lv_allCourses.setVisibility(View.VISIBLE);
+
                 courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowAllCoursesOnListView(courseDatabaseHelper);
                 break;
 
             case R.id.viewMyCourses:
                 lv_allCourses.setVisibility(View.GONE);
+                lv_searchedCourses.setVisibility(View.GONE);
                 lv_myCourses.setVisibility(View.VISIBLE);
+
                 courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowMyCoursesOnListView(courseDatabaseHelper);
+                break;
+
+            case R.id.searchCourseInstructorHomeButton:
+                lv_allCourses.setVisibility(View.GONE);
+                lv_myCourses.setVisibility(View.GONE);
+                lv_searchedCourses.setVisibility(View.VISIBLE);
+
+                searchCode = String.valueOf(et_courseCode.getText());
+                searchName = String.valueOf(et_courseName.getText());
+                ShowSearchedCoursesOnListView(courseDatabaseHelper);
                 break;
         }
     }
@@ -121,8 +153,10 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         lv_myCourses.setAdapter(myCoursesArrayAdapter);
     }
 
-    public Integer getSelectedCourseId(){
-        return selectedCourseId;
+    private void ShowSearchedCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
+
+        searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName));
+        lv_searchedCourses.setAdapter(searchedCoursesArrayAdapter);
     }
 
     private void openInstructorCourseOptions() {

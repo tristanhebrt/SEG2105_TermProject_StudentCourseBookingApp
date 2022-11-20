@@ -75,6 +75,30 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
+    public boolean deleteCourse(int courseID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        return cursor.moveToFirst();
+    }
+
+    public void removeInstructor(int courseID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_INSTRUCTOR + " = '" + "" + "' , " +
+                COLUMN_COURSE_INSTRUCTOR_ID + " = " + -1 + " , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + "" + "' , " +
+                COLUMN_COURSE_DESCRIPTION + " = '" + "" + "' , " +
+                COLUMN_COURSE_CAPACITY + " = " + -1 + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "' ";
+
+        db.execSQL(query);
+    }
+
     public List<CourseModel> getCourses(){
         List<CourseModel> returnList = new ArrayList<>();
 
@@ -156,14 +180,47 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public boolean deleteCourse(int courseID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " +
-                TABLE_NAME + " WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseID + "'";
+    public List<CourseModel> getSearchedCourses(String searchCode, String searchName){
+        List<CourseModel> returnList = new ArrayList<>();
 
+        // get data from database
+
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
+                COLUMN_COURSE_NAME + " = '" + searchName + "' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
-        return cursor.moveToFirst();
+
+        if(cursor.moveToFirst()){
+            do{
+                int courseId = cursor.getInt(0);
+                String courseCode = cursor.getString(1);
+                String courseName = cursor.getString(2);
+
+                String courseInstructor = cursor.getString(3);
+                int courseInstructorId = cursor.getInt(4);
+
+                String courseDaysAndHours = cursor.getString(5);
+
+                String courseDescription = cursor.getString(6);
+
+                int courseCapacity = cursor.getInt(7);
+                int courseEnrolled = cursor.getInt(8);
+
+                CourseModel newCourse = new CourseModel(courseId, courseCode, courseName, courseInstructor, courseInstructorId, courseDaysAndHours,
+                        courseDescription, courseCapacity, courseEnrolled);
+                returnList.add(newCourse);
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return returnList;
     }
 
     public Cursor getCourseID(String courseCode, String courseName){
@@ -176,62 +233,6 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
         Cursor data = db.rawQuery(query, null);
         return data;
-    }
-
-    public void updateCourseCode(int courseID, String newCourseCode){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " +
-                TABLE_NAME + " SET " +
-                COLUMN_COURSE_CODE + " = '" + newCourseCode + "' WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseID + "'";
-
-        db.execSQL(query);
-    }
-
-    public void updateCourseName(int courseID, String newCourseName){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " +
-                TABLE_NAME + " SET " +
-                COLUMN_COURSE_NAME + " = '" + newCourseName + "' WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseID + "'";
-
-        db.execSQL(query);
-    }
-
-       //public void addCourseInfo(int courseID, String courseInstructor, String courseDays, String courseHours, String courseDescription, int courseCapacity){
-       //     SQLiteDatabase db = this.getWritableDatabase();
-       //     String query = " INSERT INTO " + TABLE_NAME + " (" + COLUMN_COURSE_INSTRUCTOR + " , " + COLUMN_COURSE_DAYS + " , " + COLUMN_COURSE_HOURS + " , " +
-       //             COLUMN_COURSE_DESCRIPTION + " , " + COLUMN_COURSE_CAPACITY + ") " + " VALUES " + " (" + courseInstructor + " , " + courseDays + " , " + courseHours + " , " +
-       //             courseDescription + " , " + courseCapacity + ") " + " WHERE " + COLUMN_COURSE_ID + " = " + courseID;
-       //     db.execSQL(query);
-       // }
-
-    public void removeInstructor(int courseID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " +
-                TABLE_NAME + " SET " +
-                COLUMN_COURSE_INSTRUCTOR + " = '" + "" + "' , " +
-                COLUMN_COURSE_INSTRUCTOR_ID + " = " + -1 + " , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + "" + "' , " +
-                COLUMN_COURSE_DESCRIPTION + " = '" + "" + "' , " +
-                COLUMN_COURSE_CAPACITY + " = " + -1 + " WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseID + "' ";
-
-        db.execSQL(query);
-    }
-
-    public void updateCourseInfo(int courseID, String courseInstructor, int courseInstructorId, String courseDaysAndHours, String courseDescription, int courseCapacity){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " +
-                TABLE_NAME + " SET " +
-                COLUMN_COURSE_INSTRUCTOR + " = '" + courseInstructor + "' , " +
-                COLUMN_COURSE_INSTRUCTOR_ID + " = '" + courseInstructorId + "' , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + courseDaysAndHours + "' , " +
-                COLUMN_COURSE_DESCRIPTION + " = '" + courseDescription + "' , " +
-                COLUMN_COURSE_CAPACITY + " = '" + courseCapacity + "' WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseID + "' ";
-
-        db.execSQL(query);
     }
 
     public int getCourseInstructorId(int courseId){
@@ -255,6 +256,40 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();   // cleanup
         db.close();
         return -1;
+    }
+
+    public void updateCourseCode(int courseID, String newCourseCode){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_CODE + " = '" + newCourseCode + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        db.execSQL(query);
+    }
+
+    public void updateCourseName(int courseID, String newCourseName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_NAME + " = '" + newCourseName + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
+
+        db.execSQL(query);
+    }
+
+    public void updateCourseInfo(int courseID, String courseInstructor, int courseInstructorId, String courseDaysAndHours, String courseDescription, int courseCapacity){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_INSTRUCTOR + " = '" + courseInstructor + "' , " +
+                COLUMN_COURSE_INSTRUCTOR_ID + " = '" + courseInstructorId + "' , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + courseDaysAndHours + "' , " +
+                COLUMN_COURSE_DESCRIPTION + " = '" + courseDescription + "' , " +
+                COLUMN_COURSE_CAPACITY + " = '" + courseCapacity + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "' ";
+
+        db.execSQL(query);
     }
 }
 
