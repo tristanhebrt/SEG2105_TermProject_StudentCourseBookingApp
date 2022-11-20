@@ -204,9 +204,20 @@
         android:id="@+id/assignMyselfButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/unAssignMyselfButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="17dp"
         android:backgroundTint="@color/black"
         android:text="Assign myself as instructor" />
+
+    <Button
+        android:id="@+id/unAssignMyselfButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="83dp"
+        android:backgroundTint="@color/black"
+        android:text="Un-assign myself as instructor" />
+
 </RelativeLayout>

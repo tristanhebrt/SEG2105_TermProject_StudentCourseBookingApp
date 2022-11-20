@@ -15,11 +15,11 @@ import android.widget.ToggleButton;
 
 import java.util.Arrays;
 
-public class InstructorCourseOptions extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class InstructorCourseOptions extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     ToggleButton tb_monday, tb_tuesday, tb_wednesday, tb_thursday, tb_friday;
     EditText et_mondayStart, et_mondayEnd, et_tuesdayStart, et_tuesdayEnd, et_wednesdayStart,
             et_wednesdayEnd, et_thursdayStart, et_thursdayEnd, et_fridayStart, et_fridayEnd, et_courseDescription, et_courseCapacity;
-    Button btn_confirm;
+    Button btn_confirm, btn_unAssign;
     Boolean mondayIsChecked = false, tuesdayIsChecked = false, wednesdayIsChecked = false, thursdayIsChecked = false, fridayIsChecked = false;
 
     String daysAndHours = "";
@@ -62,11 +62,22 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
         et_courseCapacity = (EditText) findViewById(R.id.courseCapacityEditText);
 
         btn_confirm = (Button) findViewById(R.id.assignMyselfButton);
+        btn_unAssign = (Button) findViewById(R.id.unAssignMyselfButton);
+        
         setOnCheckedChangeListeners();
+        setClickListeners();
+    }
 
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    private void setClickListeners() {
+        for(Button button : Arrays.asList(btn_confirm, btn_unAssign)){
+            button.setOnClickListener(this);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.assignMyselfButton:
                 daysAndHours = daysAndHoursToString(mondayIsChecked, tuesdayIsChecked, wednesdayIsChecked, thursdayIsChecked, fridayIsChecked);
                 courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
                 courseDescription = et_courseDescription.getText().toString();
@@ -74,9 +85,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                 Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
                 if (extras != null){ currentInstructorId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
 
-                // currentId = mainActivity.getCurrentId();
                 instructorName = instructorDatabaseHelper.getInstructorName(currentInstructorId);
-                // selectedCourseId = instructorHome.getSelectedCourseId();
 
                 if (daysAndHours == "error") {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
@@ -84,6 +93,8 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                     Toast.makeText(InstructorCourseOptions.this, "Please select at least one day.", Toast.LENGTH_SHORT).show();
                 }else if (courseCapacity == 0){
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a course capacity.", Toast.LENGTH_SHORT).show();
+                }else if (courseDescription == ""){
+                    Toast.makeText(InstructorCourseOptions.this, "Please enter a course description.", Toast.LENGTH_SHORT).show();
                 }else{
 
                     Toast.makeText(InstructorCourseOptions.this, "Updated course information with the following: selectedCourseId = " +
@@ -95,12 +106,14 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                             daysAndHours + "/ courseDescription = " + courseDescription + "/ courseCapacity = " + courseCapacity);
 
                     courseDatabaseHelper.removeInstructor(selectedCourseId);
-
-
                     courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, currentInstructorId, daysAndHours, courseDescription, courseCapacity);
                 }
-            }
-        });
+                break;
+            case R.id.unAssignMyselfButton:
+                courseDatabaseHelper.removeInstructor(selectedCourseId);
+                Toast.makeText(this, "You were successfully un assigned from the course.", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     private void setOnCheckedChangeListeners() {

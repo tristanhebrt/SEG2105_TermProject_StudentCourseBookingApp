@@ -81,11 +81,15 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
             case R.id.editSelectedCourse:
                 if (selectedCourseId != -1) {
                     int i = courseDatabaseHelper.getCourseInstructorId(selectedCourseId); // selected course's instructor id
-                    int j = mainActivity.getCurrentId(); // current user's id
-                    if (i != -1 || i == j) { // if the selected course doesn't have an assigned instructor or if the assigned instructor is the current user
+                    int j = currentId; // current user's id
+                    if (i == -1 || i == j) { // if the selected course doesn't have an assigned instructor or if the assigned instructor is the current user
                         openInstructorCourseOptions();
                         break;
+                    }else{
+                        Toast.makeText(this, "Course already has an assigned instructor.", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(this, "Please select a course.", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
