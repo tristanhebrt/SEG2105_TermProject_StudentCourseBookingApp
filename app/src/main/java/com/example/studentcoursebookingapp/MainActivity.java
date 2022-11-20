@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         isStudent = false;
         isInstructor = false;
         isAdmin = false;
@@ -39,9 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         createAccount = (Button) findViewById(R.id.createAccount);
         login = (Button) findViewById(R.id.login);
 
-        setClickListeners();
         studentDatabaseHelper = new StudentDatabaseHelper(MainActivity.this);
         instructorDatabaseHelper = new InstructorDatabaseHelper(MainActivity.this);
+
+        setClickListeners();
     }
 
     private void setClickListeners() {
@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Integer getCurrentId(){
         return currentID;
     }
+
+    public InstructorDatabaseHelper getInstructorDatabaseHelper(){ return instructorDatabaseHelper; }
 
     public void openAdminHome() {
         Intent intent = new Intent(this, AdminHome.class);

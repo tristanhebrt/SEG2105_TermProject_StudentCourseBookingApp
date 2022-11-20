@@ -14,8 +14,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class InstructorCourseOptions extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class InstructorCourseOptions extends InstructorHome implements CompoundButton.OnCheckedChangeListener {
     ToggleButton tb_monday, tb_tuesday, tb_wednesday, tb_thursday, tb_friday;
     EditText et_mondayStart, et_mondayEnd, et_tuesdayStart, et_tuesdayEnd, et_wednesdayStart,
             et_wednesdayEnd, et_thursdayStart, et_thursdayEnd, et_fridayStart, et_fridayEnd, et_courseDescription, et_courseCapacity;
@@ -26,71 +27,12 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
     int courseCapacity = 0;
     String courseDescription = "";
     public int selectedCourseId = -1;
-    public int userId = -1;
+    public int userId;
     String instructorName = "";
 
     CourseDatabaseHelper courseDatabaseHelper;
     InstructorDatabaseHelper instructorDatabaseHelper;
-    InstructorHome instructorHome;
     MainActivity mainActivity;
-
-    @SuppressLint("MissingInflatedId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instructor_course_options);
-
-        tb_monday = (ToggleButton) findViewById(R.id.mondayToggleButton);
-        tb_tuesday = (ToggleButton) findViewById(R.id.tuesdayToggleButton);
-        tb_wednesday = (ToggleButton) findViewById(R.id.wednesdayToggleButton);
-        tb_thursday = (ToggleButton) findViewById(R.id.thursdayToggleButton);
-        tb_friday = (ToggleButton) findViewById(R.id.fridayToggleButton);
-
-        et_mondayStart = (EditText) findViewById(R.id.mondayStartEditText);
-        et_mondayEnd = (EditText) findViewById(R.id.mondayEndEditText);
-        et_tuesdayStart = (EditText) findViewById(R.id.tuesdayStartEditText);
-        et_tuesdayEnd = (EditText) findViewById(R.id.tuesdayEndEditText);
-        et_wednesdayStart = (EditText) findViewById(R.id.wednesdayStartEditText);
-        et_wednesdayEnd = (EditText) findViewById(R.id.wednesdayEndEditText);
-        et_thursdayStart = (EditText) findViewById(R.id.thursdayStartEditText);
-        et_thursdayEnd = (EditText) findViewById(R.id.thursdayEndEditText);
-        et_fridayStart = (EditText) findViewById(R.id.fridayStartEditText);
-        et_fridayEnd = (EditText) findViewById(R.id.fridayEndEditText);
-
-        et_courseDescription = (EditText) findViewById(R.id.courseDescriptionEditText);
-
-        et_courseCapacity = (EditText) findViewById(R.id.courseCapacityEditText);
-
-        btn_confirm = (Button) findViewById(R.id.assignMyselfButton);
-        setOnCheckedChangeListeners();
-
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                daysAndHours = daysAndHoursToString(mondayIsChecked, tuesdayIsChecked, wednesdayIsChecked, thursdayIsChecked, fridayIsChecked);
-                courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
-                courseDescription = et_courseDescription.getText().toString();
-
-                Bundle extras = getIntent().getExtras(); // getting user id from MainActivity
-                if (extras != null){ userId = extras.getInt("userId"); selectedCourseId = extras.getInt("selectedCourseId"); }
-                // instructorName = instructorDatabaseHelper.getInstructorName(userId);
-
-                if (daysAndHours == "error") {
-                    Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
-                }else if (daysAndHours == ""){
-                    Toast.makeText(InstructorCourseOptions.this, "Please select at least one day.", Toast.LENGTH_SHORT).show();
-                }else if (courseCapacity == 0){
-                    Toast.makeText(InstructorCourseOptions.this, "Please enter a course capacity.", Toast.LENGTH_SHORT).show();
-                }else{
-
-                    Toast.makeText(InstructorCourseOptions.this, "courseId " + selectedCourseId + " name " + instructorName + " userId " + userId + " daysHours "
-                            + daysAndHours + " description " + courseDescription + " capacity " + courseCapacity, Toast.LENGTH_SHORT).show();
-
-                    //courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, userId, daysAndHours, courseDescription, courseCapacity);
-                }
-            }
-        });
-    }
 
     private void setOnCheckedChangeListeners() {
         for (ToggleButton toggleButton : Arrays.asList(tb_monday, tb_tuesday, tb_wednesday, tb_wednesday, tb_friday)){
@@ -98,43 +40,24 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()) {
             case R.id.mondayToggleButton:
-                if (mondayIsChecked) {
-                    mondayIsChecked = false;
-                } else {
-                    mondayIsChecked = true;
-                }
+                mondayIsChecked = !mondayIsChecked;
                 break;
             case R.id.tuesdayToggleButton:
-                if (tuesdayIsChecked) {
-                    tuesdayIsChecked = false;
-                } else {
-                    tuesdayIsChecked = true;
-                }
+                tuesdayIsChecked = !tuesdayIsChecked;
                 break;
             case R.id.wednesdayToggleButton:
-                if (wednesdayIsChecked) {
-                    wednesdayIsChecked = false;
-                } else {
-                    wednesdayIsChecked = true;
-                }
+                wednesdayIsChecked = !wednesdayIsChecked;
                 break;
             case R.id.thursdayToggleButton:
-                if (thursdayIsChecked) {
-                    thursdayIsChecked = false;
-                } else {
-                    thursdayIsChecked = true;
-                }
+                thursdayIsChecked = !thursdayIsChecked;
                 break;
             case R.id.fridayToggleButton:
-                if (fridayIsChecked) {
-                    fridayIsChecked = false;
-                } else {
-                    fridayIsChecked = true;
-                }
+                fridayIsChecked = !fridayIsChecked;
                 break;
         }
     }

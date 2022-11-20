@@ -5,9 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,8 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_INSTRUCTOR_EMAIL = "INSTRUCTOR_EMAIL";
     public static final String COLUMN_INSTRUCTOR_USERNAME = "INSTRUCTOR_USERNAME";
     public static final String COLUMN_INSTRUCTOR_PASSWORD = "INSTRUCTOR_PASSWORD";
+
+    InstructorModel instructorModel;
 
     public InstructorDatabaseHelper(@Nullable Context context) {
         super(context, "instructor.db", null, 1);
@@ -133,22 +140,18 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String getInstructorName(int instructorId){
+        if(instructorId == -1){ return null; }
 
-        String queryString = " SELECT * FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = " + instructorId;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_INSTRUCTOR_USERNAME + " FROM " + INSTRUCTOR_TABLE + " WHERE " +
+                COLUMN_ID + " = '" + instructorId + "' ";
 
-        if(cursor.moveToFirst()){
-            do{
-                String instructorName = cursor.getString(1);
-                return instructorName;
-            }while (cursor.moveToNext());
+        Cursor cursor = db.rawQuery(query, null);
 
-        }else{
-            // failure don't add anything
-        }
-        cursor.close();   // cleanup
-        db.close();
+        String instructorName = null;
+
+        while(cursor.moveToNext()){ instructorName = cursor.getString(1); }
+        if(instructorName != null){ return instructorName; }
         return null;
     }
 }
