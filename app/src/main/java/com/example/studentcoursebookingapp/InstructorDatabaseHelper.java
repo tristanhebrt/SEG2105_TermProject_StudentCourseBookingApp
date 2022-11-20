@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -134,21 +135,18 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
 
     public String getInstructorName(int instructorId){
 
-        String queryString = " SELECT * FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = " + instructorId;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT * FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = '" + instructorId + "' ";
 
-        if(cursor.moveToFirst()){
-            do{
-                String instructorName = cursor.getString(1);
-                return instructorName;
-            }while (cursor.moveToNext());
+        Cursor cursor = db.rawQuery(query, null);
 
-        }else{
-            // failure don't add anything
+        String instructorName = null;
+
+        while(cursor.moveToNext()) instructorName = cursor.getString(1);
+        if(instructorName != null){
+            return instructorName;
         }
-        cursor.close();   // cleanup
-        db.close();
+
         return null;
     }
 }

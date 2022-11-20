@@ -22,12 +22,12 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
     Button btn_confirm;
     Boolean mondayIsChecked = false, tuesdayIsChecked = false, wednesdayIsChecked = false, thursdayIsChecked = false, fridayIsChecked = false;
 
-    String daysAndHours = "";
+    String daysAndHours;
     int courseCapacity = 0;
-    String courseDescription = "";
-    public int selectedCourseId = -1;
-    public int userId = -1;
-    String instructorName = "";
+    String courseDescription;
+    int selectedCourseId = -1;
+    int currentId;
+    String instructorName;
 
     CourseDatabaseHelper courseDatabaseHelper = new CourseDatabaseHelper(this);
     InstructorDatabaseHelper instructorDatabaseHelper = new InstructorDatabaseHelper(this);
@@ -71,9 +71,12 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                 courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
                 courseDescription = et_courseDescription.getText().toString();
 
-                Bundle extras = getIntent().getExtras(); // getting user id from MainActivity
-                if (extras != null){ userId = extras.getInt("userId"); selectedCourseId = extras.getInt("selectedCourseId"); }
-                instructorName = instructorDatabaseHelper.getInstructorName(userId);
+                Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
+                if (extras != null){ currentId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
+
+                // currentId = mainActivity.getCurrentId();
+                instructorName = instructorDatabaseHelper.getInstructorName(currentId);
+                // selectedCourseId = instructorHome.getSelectedCourseId();
 
                 if (daysAndHours == "error") {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
@@ -83,8 +86,11 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a course capacity.", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    Toast.makeText(InstructorCourseOptions.this, "courseId " + selectedCourseId + " name " + instructorName + " userId " + userId + " daysHours "
-                            + daysAndHours + " description " + courseDescription + " capacity " + courseCapacity, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InstructorCourseOptions.this, "selectedCourseId " + selectedCourseId + " instructorName " + instructorName + " currentId " + currentId + " daysAndHours "
+                            + daysAndHours + " courseDescription " + courseDescription + " courseCapacity " + courseCapacity, Toast.LENGTH_SHORT).show();
+
+                    System.out.println("courseId " + selectedCourseId + " name " + instructorName + " currentId " + currentId + " daysHours "
+                            + daysAndHours + " description " + courseDescription + " capacity " + courseCapacity);
 
                     //courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, userId, daysAndHours, courseDescription, courseCapacity);
                 }

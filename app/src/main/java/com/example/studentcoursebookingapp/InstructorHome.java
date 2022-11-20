@@ -22,7 +22,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter;
 
     public int selectedCourseId = -1;
-    public int userId;
+    public int currentId;
 
     MainActivity mainActivity = new MainActivity();
 
@@ -43,7 +43,10 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         // Bundle extras = getIntent().getExtras();  getting user id from MainActivity
         // if (extras != null){ userId = extras.getInt("userId"); }
 
-        userId = mainActivity.getCurrentId();
+        currentId = mainActivity.getCurrentId();
+
+        Bundle extras = getIntent().getExtras();  // getting currentId from MainActivity
+        if (extras != null){ currentId = extras.getInt("currentId"); }
 
         lv_allCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -121,7 +124,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     private void openInstructorCourseOptions() {
         Intent intent = new Intent(this, InstructorCourseOptions.class);
         intent.putExtra("selectedCourseId", selectedCourseId);
-        intent.putExtra("userId", userId);
+        intent.putExtra("currentId", currentId);
         startActivity(intent);
     }
 }
