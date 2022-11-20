@@ -3,11 +3,14 @@ package com.example.studentcoursebookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -16,6 +19,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     ListView lv_allCourses, lv_myCourses;
     CourseDatabaseHelper courseDatabaseHelper;
     ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter;
+
+    public int selectedCourseId;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -30,6 +35,26 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
+        setOnItemClickListeners();
+    }
+
+    private void setOnItemClickListeners() {
+        for (ListView listView : Arrays.asList(lv_allCourses, lv_myCourses)){
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    switch (view.getId()){
+                        case R.id.allCoursesList:
+                        case R.id.myCoursesList:
+                            CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
+                            selectedCourseId = clickedCourse.getCourseId();
+                            break;
+                    }
+
+                }
+            });
+        }
     }
 
     private void setClickListeners() {
