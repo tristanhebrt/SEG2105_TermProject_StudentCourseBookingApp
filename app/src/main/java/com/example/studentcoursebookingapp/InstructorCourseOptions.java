@@ -22,7 +22,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
     Button btn_confirm;
     Boolean mondayIsChecked = false, tuesdayIsChecked = false, wednesdayIsChecked = false, thursdayIsChecked = false, fridayIsChecked = false;
 
-    String daysAndHours;
+    String daysAndHours = "";
     int courseCapacity = 0;
     String courseDescription;
     int selectedCourseId = -1;
@@ -92,7 +92,8 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                     System.out.println("courseId " + selectedCourseId + " name " + instructorName + " currentId " + currentId + " daysHours "
                             + daysAndHours + " description " + courseDescription + " capacity " + courseCapacity);
 
-                    //courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, userId, daysAndHours, courseDescription, courseCapacity);
+                    courseDatabaseHelper.removeInstructor(selectedCourseId);
+                    courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, currentId, daysAndHours, courseDescription, courseCapacity);
                 }
             }
         });

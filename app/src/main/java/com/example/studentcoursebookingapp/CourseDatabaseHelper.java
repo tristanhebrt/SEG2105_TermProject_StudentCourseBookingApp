@@ -197,19 +197,28 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     public void removeInstructor(int courseID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_INSTRUCTOR + " = " + null + " , " + COLUMN_COURSE_INSTRUCTOR_ID + " = " + -1 + " , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = " + null + " , " + COLUMN_COURSE_DESCRIPTION + " = " + null + " , " +
-                COLUMN_COURSE_CAPACITY + " = " + -1 + " WHERE " + COLUMN_COURSE_ID + " = " + courseID;
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_INSTRUCTOR + " = '" + null + "' , " +
+                COLUMN_COURSE_INSTRUCTOR_ID + " = " + -1 + " , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + null + "' , " +
+                COLUMN_COURSE_DESCRIPTION + " = '" + null + "' , " +
+                COLUMN_COURSE_CAPACITY + " = " + -1 + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "' ";
 
         db.execSQL(query);
     }
 
     public void updateCourseInfo(int courseID, String courseInstructor, int courseInstructorId, String courseDaysAndHours, String courseDescription, int courseCapacity){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_INSTRUCTOR + " = " + courseInstructor + " , " + COLUMN_COURSE_INSTRUCTOR_ID + " = " + courseInstructorId + " , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = " + courseDaysAndHours + " , " + COLUMN_COURSE_DESCRIPTION + " = " + courseDescription + " , " +
-                COLUMN_COURSE_CAPACITY + " = " + courseCapacity + " WHERE " +
-                COLUMN_COURSE_ID + " = " + courseID;
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_INSTRUCTOR + " = '" + courseInstructor + "' , " +
+                COLUMN_COURSE_INSTRUCTOR_ID + " = '" + courseInstructorId + "' , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + courseDaysAndHours + "' , " +
+                COLUMN_COURSE_DESCRIPTION + " = '" + courseDescription + "' , " +
+                COLUMN_COURSE_CAPACITY + " = '" + courseCapacity + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "' ";
 
         db.execSQL(query);
     }

@@ -126,8 +126,11 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getInstructorID(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT " + COLUMN_ID + " FROM " + INSTRUCTOR_TABLE + " WHERE " +
-                COLUMN_INSTRUCTOR_USERNAME + " = '" + username + "' AND " + COLUMN_INSTRUCTOR_PASSWORD + " = '" + password + "' ";
+        String query = " SELECT " +
+                COLUMN_ID + " FROM " +
+                INSTRUCTOR_TABLE + " WHERE " +
+                COLUMN_INSTRUCTOR_USERNAME + " = '" + username + "' AND " +
+                COLUMN_INSTRUCTOR_PASSWORD + " = '" + password + "' ";
 
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
@@ -136,7 +139,9 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
     public String getInstructorName(int instructorId){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT * FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = '" + instructorId + "' ";
+        String query = " SELECT * FROM " +
+                INSTRUCTOR_TABLE + " WHERE " +
+                COLUMN_ID + " = '" + instructorId + "' ";
 
         Cursor cursor = db.rawQuery(query, null);
 
