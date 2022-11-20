@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InstructorCourseOptions">
+
+    <LinearLayout
+        android:id="@+id/weekDaysLayout"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_above="@+id/timeTableLayout"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/mondayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="Monday"
+            android:textOn="Monday"
+            android:textSize="10dp" />
+
+        <ToggleButton
+            android:id="@+id/tuesdayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="Tuesday"
+            android:textOn="Tuesday"
+            android:textSize="10dp" />
+
+        <ToggleButton
+            android:id="@+id/wednesdayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="Wednesday"
+            android:textOn="Wednesday"
+            android:textSize="9dp" />
+
+        <ToggleButton
+            android:id="@+id/thursdayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="Thursday"
+            android:textOn="Thursday"
+            android:textSize="10dp" />
+
+        <ToggleButton
+            android:id="@+id/fridayToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="Friday"
+            android:textOn="Friday"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/timeTableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="207dp"
+        android:layout_above="@+id/button"
+        android:layout_marginBottom="20dp">
+
+        <TableRow
+            android:id="@+id/timeStartTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/mondayEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Start Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Start Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Start Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Start Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Start Time" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/timeToTableRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/mondayEditText6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="End Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="End Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="End Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="End Time" />
+
+            <EditText
+                android:id="@+id/mondayEditText10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="End Time" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/mondayEditText12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Course Capacity"
+                android:textAlignment="center" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="226dp"
+        android:backgroundTint="@color/black"
+        android:text="Assign myself as instructor" />
+</RelativeLayout>
