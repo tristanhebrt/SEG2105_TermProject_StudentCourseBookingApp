@@ -158,17 +158,21 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteCourse(int courseID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+        String queryString = "DELETE FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
 
         Cursor cursor = db.rawQuery(queryString, null);
-
         return cursor.moveToFirst();
     }
 
     public Cursor getCourseID(String courseCode, String courseName){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT " + COLUMN_COURSE_ID + " FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " + COLUMN_COURSE_NAME + " = '" + courseName + "' ";
+        String query = " SELECT " +
+                COLUMN_COURSE_ID + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_CODE + " = '" + courseCode + "' AND " +
+                COLUMN_COURSE_NAME + " = '" + courseName + "' ";
 
         Cursor data = db.rawQuery(query, null);
         return data;
@@ -176,16 +180,20 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     public void updateCourseCode(int courseID, String newCourseCode){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_CODE + " = '" +
-                newCourseCode + "' WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_CODE + " = '" + newCourseCode + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
 
         db.execSQL(query);
     }
 
     public void updateCourseName(int courseID, String newCourseName){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " UPDATE " + TABLE_NAME + " SET " + COLUMN_COURSE_NAME + " = '" +
-                newCourseName + "' WHERE " + COLUMN_COURSE_ID + " = '" + courseID + "'";
+        String query = " UPDATE " +
+                TABLE_NAME + " SET " +
+                COLUMN_COURSE_NAME + " = '" + newCourseName + "' WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseID + "'";
 
         db.execSQL(query);
     }
@@ -228,7 +236,10 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     public int getCourseInstructorId(int courseId){
 
-        String queryString = " SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = " + courseId;
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = " + courseId;
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 

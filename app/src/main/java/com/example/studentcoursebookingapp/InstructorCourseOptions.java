@@ -26,7 +26,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
     int courseCapacity = 0;
     String courseDescription;
     int selectedCourseId = -1;
-    int currentId;
+    int currentInstructorId;
     String instructorName;
 
     CourseDatabaseHelper courseDatabaseHelper = new CourseDatabaseHelper(this);
@@ -72,10 +72,10 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                 courseDescription = et_courseDescription.getText().toString();
 
                 Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
-                if (extras != null){ currentId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
+                if (extras != null){ currentInstructorId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
 
                 // currentId = mainActivity.getCurrentId();
-                instructorName = instructorDatabaseHelper.getInstructorName(currentId);
+                instructorName = instructorDatabaseHelper.getInstructorName(currentInstructorId);
                 // selectedCourseId = instructorHome.getSelectedCourseId();
 
                 if (daysAndHours == "error") {
@@ -86,14 +86,18 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a course capacity.", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    Toast.makeText(InstructorCourseOptions.this, "selectedCourseId " + selectedCourseId + " instructorName " + instructorName + " currentId " + currentId + " daysAndHours "
-                            + daysAndHours + " courseDescription " + courseDescription + " courseCapacity " + courseCapacity, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InstructorCourseOptions.this, "Updated course information with the following: selectedCourseId = " +
+                            selectedCourseId + "/ instructorName = " + instructorName + "/ currentInstructorId = " + currentInstructorId + "/ daysAndHours = " +
+                            daysAndHours + "/ courseDescription = " + courseDescription + "/ courseCapacity = " + courseCapacity, Toast.LENGTH_SHORT).show();
 
-                    System.out.println("courseId " + selectedCourseId + " name " + instructorName + " currentId " + currentId + " daysHours "
-                            + daysAndHours + " description " + courseDescription + " capacity " + courseCapacity);
+                    System.out.println("Updated course information with the following: selectedCourseId = " +
+                            selectedCourseId + "/ instructorName = " + instructorName + "/ currentInstructorId = " + currentInstructorId + "/ daysAndHours = " +
+                            daysAndHours + "/ courseDescription = " + courseDescription + "/ courseCapacity = " + courseCapacity);
 
                     courseDatabaseHelper.removeInstructor(selectedCourseId);
-                    courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, currentId, daysAndHours, courseDescription, courseCapacity);
+
+
+                    courseDatabaseHelper.updateCourseInfo(selectedCourseId, instructorName, currentInstructorId, daysAndHours, courseDescription, courseCapacity);
                 }
             }
         });
@@ -105,43 +109,24 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()) {
             case R.id.mondayToggleButton:
-                if (mondayIsChecked) {
-                    mondayIsChecked = false;
-                } else {
-                    mondayIsChecked = true;
-                }
+                mondayIsChecked = !mondayIsChecked;
                 break;
             case R.id.tuesdayToggleButton:
-                if (tuesdayIsChecked) {
-                    tuesdayIsChecked = false;
-                } else {
-                    tuesdayIsChecked = true;
-                }
+                tuesdayIsChecked = !tuesdayIsChecked;
                 break;
             case R.id.wednesdayToggleButton:
-                if (wednesdayIsChecked) {
-                    wednesdayIsChecked = false;
-                } else {
-                    wednesdayIsChecked = true;
-                }
+                wednesdayIsChecked = !wednesdayIsChecked;
                 break;
             case R.id.thursdayToggleButton:
-                if (thursdayIsChecked) {
-                    thursdayIsChecked = false;
-                } else {
-                    thursdayIsChecked = true;
-                }
+                thursdayIsChecked = !thursdayIsChecked;
                 break;
             case R.id.fridayToggleButton:
-                if (fridayIsChecked) {
-                    fridayIsChecked = false;
-                } else {
-                    fridayIsChecked = true;
-                }
+                fridayIsChecked = !fridayIsChecked;
                 break;
         }
     }
