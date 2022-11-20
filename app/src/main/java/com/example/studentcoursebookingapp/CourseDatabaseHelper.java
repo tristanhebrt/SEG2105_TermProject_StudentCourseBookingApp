@@ -114,12 +114,15 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public List<CourseModel> getMyCourses(){
+    public List<CourseModel> getMyCourses(int currentId){
         List<CourseModel> returnList = new ArrayList<>();
 
         // get data from database
 
-        String queryString = " SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_INSTRUCTOR_ID + " = " + mainActivity.getCurrentId();
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_INSTRUCTOR_ID + " = '" + currentId + "' ";
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 

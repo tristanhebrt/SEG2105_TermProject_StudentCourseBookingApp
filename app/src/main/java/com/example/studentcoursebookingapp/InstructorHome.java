@@ -113,7 +113,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
     private void ShowMyCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
 
-        myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getMyCourses());
+        myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getMyCourses(currentId));
         lv_myCourses.setAdapter(myCoursesArrayAdapter);
     }
 
