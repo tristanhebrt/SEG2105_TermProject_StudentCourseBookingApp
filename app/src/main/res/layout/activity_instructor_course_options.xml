@@ -73,9 +73,9 @@
     <TableLayout
         android:id="@+id/timeTableLayout"
         android:layout_width="match_parent"
-        android:layout_height="207dp"
-        android:layout_above="@+id/button"
-        android:layout_marginBottom="20dp">
+        android:layout_height="381dp"
+        android:layout_above="@+id/assignMyselfButton"
+        android:layout_marginBottom="67dp">
 
         <TableRow
             android:id="@+id/timeStartTableRow"
@@ -83,44 +83,44 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/mondayEditText"
+                android:id="@+id/mondayStartEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Start Time" />
+                android:hint="Start Time" />
 
             <EditText
-                android:id="@+id/mondayEditText2"
+                android:id="@+id/tuesdayStartEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Start Time" />
+                android:hint="Start Time" />
 
             <EditText
-                android:id="@+id/mondayEditText3"
+                android:id="@+id/wednesdayStartEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Start Time" />
+                android:hint="Start Time" />
 
             <EditText
-                android:id="@+id/mondayEditText4"
+                android:id="@+id/thursdayStartEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Start Time" />
+                android:hint="Start Time" />
 
             <EditText
-                android:id="@+id/mondayEditText5"
+                android:id="@+id/fridayStartEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Start Time" />
+                android:hint="Start Time" />
         </TableRow>
 
         <TableRow
@@ -129,44 +129,44 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/mondayEditText6"
+                android:id="@+id/mondayEndEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="End Time" />
+                android:hint="End Time" />
 
             <EditText
-                android:id="@+id/mondayEditText7"
+                android:id="@+id/tuesdayEndEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="End Time" />
+                android:hint="End Time" />
 
             <EditText
-                android:id="@+id/mondayEditText8"
+                android:id="@+id/wednesdayEndEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="End Time" />
+                android:hint="End Time" />
 
             <EditText
-                android:id="@+id/mondayEditText9"
+                android:id="@+id/thursdayEndEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="End Time" />
+                android:hint="End Time" />
 
             <EditText
-                android:id="@+id/mondayEditText10"
+                android:id="@+id/fridayEndEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="End Time" />
+                android:hint="End Time" />
         </TableRow>
 
         <TableRow
@@ -174,24 +174,39 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/mondayEditText12"
+                android:id="@+id/courseCapacityEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:text="Course Capacity"
+                android:hint="Course Capacity"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/courseDescriptionEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="193dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Course Description"
                 android:textAlignment="center" />
         </TableRow>
 
     </TableLayout>
 
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/assignMyselfButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="226dp"
+        android:layout_marginBottom="148dp"
         android:backgroundTint="@color/black"
         android:text="Assign myself as instructor" />
 </RelativeLayout>

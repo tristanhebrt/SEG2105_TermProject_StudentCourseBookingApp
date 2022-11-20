@@ -9,15 +9,14 @@ public class CourseModel {
     private String courseInstructor;
     private int courseInstructorId;
 
-    private String courseDays;
-    private String courseHours;
+    private String courseDaysAndHours;
     private String courseDescription;
 
     private int courseCapacity;
     private int courseEnrolled;
 
     // constructors
-    public CourseModel(int courseId, String courseCode, String courseName, String courseInstructor, int courseInstructorId, String courseDays, String courseHours,
+    public CourseModel(int courseId, String courseCode, String courseName, String courseInstructor, int courseInstructorId, String courseDaysAndHours,
                        String courseDescription, int courseCapacity, int courseEnrolled) {
 
         this.courseId = courseId;
@@ -28,8 +27,7 @@ public class CourseModel {
         this.courseInstructor = courseInstructor;
         this.courseInstructorId = courseInstructorId;
 
-        this.courseDays = courseDays;
-        this.courseHours = courseHours;
+        this.courseDaysAndHours = courseDaysAndHours;
         this.courseDescription = courseDescription;
 
         this.courseCapacity = courseCapacity;
@@ -47,8 +45,7 @@ public class CourseModel {
                 ", courseName='" + courseName + '\'' +
                 ", courseInstructor='" + courseInstructor + '\'' +
                 ", courseInstructorId='" + courseInstructorId +
-                ", courseDays='" + courseDays + '\'' +
-                ", courseHours='" + courseHours + '\'' +
+                ", courseDays='" + courseDaysAndHours + '\'' +
                 ", courseDescription='" + courseDescription + '\'' +
                 ", courseCapacity=" + courseCapacity +
                 ", courseEnrolled=" + courseEnrolled +
@@ -87,17 +84,10 @@ public class CourseModel {
     public void setCourseInstructorId(int courseInstructorId){ this.courseInstructorId = courseInstructorId; }
 
     public String getCourseDays() {
-        return courseDays;
+        return courseDaysAndHours;
     }
     public void setCourseDays(String courseDays) {
-        this.courseDays = courseDays;
-    }
-
-    public String getCourseHours() {
-        return courseHours;
-    }
-    public void setCourseHours(String courseHours) {
-        this.courseHours = courseHours;
+        this.courseDaysAndHours = courseDays;
     }
 
     public String getCourseDescription() {

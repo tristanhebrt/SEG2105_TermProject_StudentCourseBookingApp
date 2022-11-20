@@ -131,4 +131,24 @@ public class InstructorDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
     }
+
+    public String getInstructorName(int instructorId){
+
+        String queryString = " SELECT * FROM " + INSTRUCTOR_TABLE + " WHERE " + COLUMN_ID + " = " + instructorId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String instructorName = cursor.getString(1);
+                return instructorName;
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return null;
+    }
 }

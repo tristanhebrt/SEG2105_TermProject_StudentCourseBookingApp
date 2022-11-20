@@ -22,6 +22,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter;
 
     public int selectedCourseId = -1;
+    public int userId;
+
     MainActivity mainActivity = new MainActivity();
 
     @SuppressLint("MissingInflatedId")
@@ -37,6 +39,9 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
+
+        Bundle extras = getIntent().getExtras(); // getting user id from MainActivity
+        if (extras != null){ userId = extras.getInt("userId"); }
 
         lv_allCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -113,6 +118,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
     private void openInstructorCourseOptions() {
         Intent intent = new Intent(this, InstructorCourseOptions.class);
+        intent.putExtra("selectedCourseId", selectedCourseId);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 }

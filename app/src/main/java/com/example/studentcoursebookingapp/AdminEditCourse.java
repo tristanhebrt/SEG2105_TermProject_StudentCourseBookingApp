@@ -14,7 +14,6 @@ import android.widget.Toast;
 public class AdminEditCourse extends AppCompatActivity {
     EditText et_newCourseCode, et_newCourseName;
     Button btn_save;
-    int courseID;
     String courseCode, courseName, newCourseCode, newCourseName;
     CourseDatabaseHelper courseDatabaseHelper;
 
