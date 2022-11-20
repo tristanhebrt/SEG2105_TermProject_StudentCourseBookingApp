@@ -63,6 +63,9 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
 
         btn_confirm = (Button) findViewById(R.id.assignMyselfButton);
         btn_unAssign = (Button) findViewById(R.id.unAssignMyselfButton);
+
+        Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
+        if (extras != null){ currentInstructorId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
         
         setOnCheckedChangeListeners();
         setClickListeners();
@@ -81,10 +84,6 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                 daysAndHours = daysAndHoursToString(mondayIsChecked, tuesdayIsChecked, wednesdayIsChecked, thursdayIsChecked, fridayIsChecked);
                 courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
                 courseDescription = et_courseDescription.getText().toString();
-
-                Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
-                if (extras != null){ currentInstructorId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
-
                 instructorName = instructorDatabaseHelper.getInstructorName(currentInstructorId);
 
                 if (daysAndHours == "error") {
