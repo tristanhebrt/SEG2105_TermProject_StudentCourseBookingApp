@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -214,6 +215,26 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_COURSE_ID + " = " + courseID;
 
         db.execSQL(query);
+    }
+
+    public int getCourseInstructorId(int courseId){
+
+        String queryString = " SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_COURSE_ID + " = " + courseId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int courseInstructorId = cursor.getInt(4);
+                return courseInstructorId;
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return -1;
     }
 }
 

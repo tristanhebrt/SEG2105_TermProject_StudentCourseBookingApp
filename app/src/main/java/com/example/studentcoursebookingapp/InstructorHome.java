@@ -3,6 +3,7 @@ package com.example.studentcoursebookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     CourseDatabaseHelper courseDatabaseHelper;
     ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter;
 
-    public int selectedCourseId;
+    public int selectedCourseId = -1;
+    MainActivity mainActivity = new MainActivity();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -35,26 +37,25 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
-        setOnItemClickListeners();
-    }
 
-    private void setOnItemClickListeners() {
-        for (ListView listView : Arrays.asList(lv_allCourses, lv_myCourses)){
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @SuppressLint("NonConstantResourceId")
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (view.getId()){
-                        case R.id.allCoursesList:
-                        case R.id.myCoursesList:
-                            CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
-                            selectedCourseId = clickedCourse.getCourseId();
-                            break;
-                    }
+        lv_allCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
+                selectedCourseId = clickedCourse.getCourseId();
+                Toast.makeText(InstructorHome.this, "course id = " + selectedCourseId, Toast.LENGTH_SHORT).show();
 
-                }
-            });
-        }
+            }
+        });
+
+        lv_myCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                CourseModel clickedCourse = (CourseModel) parent.getItemAtPosition(position);
+                selectedCourseId = clickedCourse.getCourseId();
+                Toast.makeText(InstructorHome.this, "course id = " + selectedCourseId, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setClickListeners() {
@@ -68,7 +69,14 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.editSelectedCourse:
-
+                if (selectedCourseId != -1) {
+                    int i = courseDatabaseHelper.getCourseInstructorId(selectedCourseId); // selected course's instructor id
+                    int j = mainActivity.getCurrentId(); // current user's id
+                    if (i != -1 || i == j) { // if the selected course doesn't have an assigned instructor or if the assigned instructor is the current user
+                        openInstructorCourseOptions();
+                        break;
+                    }
+                }
                 break;
 
             case R.id.viewAllCourses:
@@ -97,5 +105,14 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
         myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getMyCourses());
         lv_myCourses.setAdapter(myCoursesArrayAdapter);
+    }
+
+    public Integer getSelectedCourseId(){
+        return selectedCourseId;
+    }
+
+    private void openInstructorCourseOptions() {
+        Intent intent = new Intent(this, InstructorCourseOptions.class);
+        startActivity(intent);
     }
 }
