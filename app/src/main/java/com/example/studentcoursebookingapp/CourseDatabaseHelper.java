@@ -210,10 +210,10 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = " UPDATE " +
                 TABLE_NAME + " SET " +
-                COLUMN_COURSE_INSTRUCTOR + " = '" + null + "' , " +
+                COLUMN_COURSE_INSTRUCTOR + " = '" + "" + "' , " +
                 COLUMN_COURSE_INSTRUCTOR_ID + " = " + -1 + " , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + null + "' , " +
-                COLUMN_COURSE_DESCRIPTION + " = '" + null + "' , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + "" + "' , " +
+                COLUMN_COURSE_DESCRIPTION + " = '" + "" + "' , " +
                 COLUMN_COURSE_CAPACITY + " = " + -1 + " WHERE " +
                 COLUMN_COURSE_ID + " = '" + courseID + "' ";
 
