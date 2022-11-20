@@ -40,8 +40,10 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
 
-        Bundle extras = getIntent().getExtras(); // getting user id from MainActivity
-        if (extras != null){ userId = extras.getInt("userId"); }
+        // Bundle extras = getIntent().getExtras();  getting user id from MainActivity
+        // if (extras != null){ userId = extras.getInt("userId"); }
+
+        userId = mainActivity.getCurrentId();
 
         lv_allCourses.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override

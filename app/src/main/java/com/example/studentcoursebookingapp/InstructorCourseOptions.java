@@ -29,10 +29,10 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
     public int userId = -1;
     String instructorName = "";
 
-    CourseDatabaseHelper courseDatabaseHelper;
-    InstructorDatabaseHelper instructorDatabaseHelper;
-    InstructorHome instructorHome;
-    MainActivity mainActivity;
+    CourseDatabaseHelper courseDatabaseHelper = new CourseDatabaseHelper(this);
+    InstructorDatabaseHelper instructorDatabaseHelper = new InstructorDatabaseHelper(this);
+    InstructorHome instructorHome = new InstructorHome();
+    MainActivity mainActivity = new MainActivity();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,7 +73,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
 
                 Bundle extras = getIntent().getExtras(); // getting user id from MainActivity
                 if (extras != null){ userId = extras.getInt("userId"); selectedCourseId = extras.getInt("selectedCourseId"); }
-                // instructorName = instructorDatabaseHelper.getInstructorName(userId);
+                instructorName = instructorDatabaseHelper.getInstructorName(userId);
 
                 if (daysAndHours == "error") {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
