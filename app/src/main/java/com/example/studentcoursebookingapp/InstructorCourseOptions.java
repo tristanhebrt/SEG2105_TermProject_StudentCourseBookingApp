@@ -82,7 +82,15 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
         switch (view.getId()){
             case R.id.assignMyselfButton:
                 daysAndHours = daysAndHoursToString(mondayIsChecked, tuesdayIsChecked, wednesdayIsChecked, thursdayIsChecked, fridayIsChecked);
-                courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
+
+                try {
+                    courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
+                }
+                catch(Exception e) {
+                    Toast.makeText(InstructorCourseOptions.this, "Please enter a valid course capacity.", Toast.LENGTH_SHORT).show();
+                }
+
+
                 courseDescription = et_courseDescription.getText().toString();
                 instructorName = instructorDatabaseHelper.getInstructorName(currentInstructorId);
 
@@ -90,8 +98,8 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
                 }else if (daysAndHours == ""){
                     Toast.makeText(InstructorCourseOptions.this, "Please select at least one day.", Toast.LENGTH_SHORT).show();
-                }else if (courseCapacity == 0){
-                    Toast.makeText(InstructorCourseOptions.this, "Please enter a course capacity.", Toast.LENGTH_SHORT).show();
+                }else if (courseCapacity <= 0){
+                    Toast.makeText(InstructorCourseOptions.this, "Please enter a valid course capacity.", Toast.LENGTH_SHORT).show();
                 }else if (courseDescription == ""){
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a course description.", Toast.LENGTH_SHORT).show();
                 }else{

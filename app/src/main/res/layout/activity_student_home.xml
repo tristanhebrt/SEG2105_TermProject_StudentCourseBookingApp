@@ -5,20 +5,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StudentHome"
-    android:background="@color/black">
+    android:background="#9E9E9E">
 
-    <TextView
-        android:id="@+id/STUDENT"
-        android:layout_width="71dp"
+    <TableLayout
+        android:id="@+id/studentHomeTable"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/allCoursesList"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:id="@+id/STUDENT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="STUDENT"
+            android:textColor="@color/white" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/allCoursesList">
+
+            <Button
+                android:id="@+id/viewAllCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="View All Courses"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/viewMyCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3B000000"
+                android:text="View My Courses"
+                android:textColor="@color/white" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/searchCourseCodeStudentHomeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="Course code"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/searchCourseNameStudentHomeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Course name"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/searchCourseDayStudentHomeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Course day"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/searchCourseStudentHomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#3B000000"
+            android:text="Search"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/enrollCourseStudentHomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#3B000000"
+            android:text="Enroll into selected course"
+            android:textColor="@color/white"/>
+
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/allCoursesList"
+
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="309dp"
-        android:layout_marginBottom="685dp"
-        android:text="STUDENT"
-        android:textColor="@color/white" />
+        android:layout_marginBottom="0dp"
+        android:background="#6BFFFFFF" />
+
+    <ListView
+        android:id="@+id/myCoursesList"
+
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="#6BFFFFFF" />
+
+    <ListView
+        android:id="@+id/searchedCoursesList"
+
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="#6BFFFFFF" />
 </RelativeLayout>
