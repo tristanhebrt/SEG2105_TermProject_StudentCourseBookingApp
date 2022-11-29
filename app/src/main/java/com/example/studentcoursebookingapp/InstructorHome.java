@@ -155,7 +155,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
     private void ShowSearchedCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
 
-        searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName));
+        searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName, null));
         lv_searchedCourses.setAdapter(searchedCoursesArrayAdapter);
     }
 

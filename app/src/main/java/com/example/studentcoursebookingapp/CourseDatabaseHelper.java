@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CourseDatabaseHelper extends SQLiteOpenHelper {
@@ -34,7 +35,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_ENROLLED = "COURSE_ENROLLED";
 
     public CourseDatabaseHelper(@Nullable Context context) {
-        super(context, "course.db", null, 7);
+        super(context, "course.db", null, 8);
     }
 
     @Override
@@ -180,7 +181,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public List<CourseModel> getSearchedCourses(String searchCode, String searchName){
+    public List<CourseModel> getSearchedCourses(String searchCode, String searchName, String searchDay){
         List<CourseModel> returnList = new ArrayList<>();
 
         // get data from database
@@ -189,6 +190,16 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 TABLE_NAME + " WHERE " +
                 COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
                 COLUMN_COURSE_NAME + " = '" + searchName + "' ";
+
+        if (searchDay != null) {
+            if (getCourseIdByDay(searchDay) >= 0) {
+                queryString = " SELECT * FROM " +
+                        TABLE_NAME + " WHERE " +
+                        COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
+                        COLUMN_COURSE_NAME + " = '" + searchName + "' OR " +
+                        COLUMN_COURSE_ID + " = '" + getCourseIdByDay(searchDay) + "'";
+            }
+        }
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
@@ -221,6 +232,29 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();   // cleanup
         db.close();
         return returnList;
+    }
+
+    public int getCourseIdByDay(String searchCourseDay){
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String courseDaysAndHours = cursor.getString(5);
+                List<String> courseDays = new ArrayList<String>(Arrays.asList(courseDaysAndHours.split("/")));
+                if (courseDays.contains(searchCourseDay)){ return cursor.getInt(0); }
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
+        db.close();
+        return -1;
     }
 
     public Cursor getCourseID(String courseCode, String courseName){

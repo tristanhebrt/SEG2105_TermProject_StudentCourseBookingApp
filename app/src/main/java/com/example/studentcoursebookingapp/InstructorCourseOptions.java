@@ -158,7 +158,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
             if (start.equals("") || end.equals("")) {
                 return "error";
             }else{
-                daysAndHours += "Monday from " + start + " to " + end + ". ";
+                daysAndHours += "Monday/" + start + " to " + end + "/";
             }
         }
 
@@ -168,7 +168,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
             if (start.equals("") || end.equals("")) {
                 return "error";
             }else{
-                daysAndHours += "Tuesday from " + start + " to " + end + ". ";
+                daysAndHours += "Tuesday/" + start + " to " + end + "/";
             }
         }
 
@@ -178,7 +178,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
             if (start.equals("") || end.equals("")) {
                 return "error";
             }else{
-                daysAndHours += "Wednesday from " + start + " to " + end + ". ";
+                daysAndHours += "Wednesday/" + start + " to " + end + "/";
             }
         }
 
@@ -188,7 +188,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
             if (start.equals("") || end.equals("")) {
                 return "error";
             }else{
-                daysAndHours += "Thursday from " + start + " to " + end + ". ";
+                daysAndHours += "Thursday/" + start + " to " + end + "/";
             }
         }
 
@@ -198,7 +198,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements Compou
             if (start.equals("") || end.equals("")) {
                 return "error";
             }else{
-                daysAndHours += "Friday from " + start + " to " + end + ". ";
+                daysAndHours += "Friday/" + start + " to " + end + "/";
             }
         }
         return daysAndHours;

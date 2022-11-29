@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void openStudentHome() {
         Intent intent = new Intent(this, StudentHome.class);
+        intent.putExtra("currentId", currentID);
         startActivity(intent);
     }
 
