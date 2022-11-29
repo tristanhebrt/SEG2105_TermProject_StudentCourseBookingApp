@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 public class StudentHome extends AppCompatActivity implements View.OnClickListener {
-    Button btn_enrollSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search;
+    Button btn_enrollSelectedCourse, btn_unEnrollSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search;
     EditText et_courseCode, et_courseName, et_courseDay;
     ListView lv_allCourses, lv_myCourses, lv_searchedCourses;
     CourseDatabaseHelper courseDatabaseHelper;
@@ -32,6 +32,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_student_home);
 
         btn_enrollSelectedCourse = (Button) findViewById(R.id.enrollCourseStudentHomeButton);
+        btn_unEnrollSelectedCourse = (Button) findViewById(R.id.unEnrollCourseStudentHomeButton);
         btn_viewAllCourses = (Button) findViewById(R.id.viewAllCourses);
         btn_viewMyCourses = (Button) findViewById(R.id.viewMyCourses);
         btn_search = (Button) findViewById(R.id.searchCourseStudentHomeButton);
@@ -79,7 +80,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
     }
 
     private void setClickListeners() {
-        for (Button button : Arrays.asList(btn_enrollSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search)){
+        for (Button button : Arrays.asList(btn_enrollSelectedCourse, btn_unEnrollSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search)){
             button.setOnClickListener(this);
         }
     }
@@ -89,6 +90,10 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()){
             case R.id.enrollCourseStudentHomeButton:
                 courseDatabaseHelper.enrollStudent(selectedCourseId, currentId);
+                break;
+
+            case R.id.unEnrollCourseStudentHomeButton:
+                courseDatabaseHelper.unEnrollStudent(selectedCourseId, currentId);
                 break;
 
             case R.id.viewAllCourses:

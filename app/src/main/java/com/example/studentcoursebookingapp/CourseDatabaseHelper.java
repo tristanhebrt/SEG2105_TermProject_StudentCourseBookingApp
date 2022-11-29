@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
@@ -481,6 +482,50 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(query);
 
         }else{
+            // failure don't add anything
+        }
+        cursor.close();   // cleanup
+        db.close();
+    }
+
+    public void unEnrollStudent(int courseId, int studentId) {
+
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = " + courseId;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String courseEnrolled = cursor.getString(8);  // Get all the enrolled students in the selected course as a String
+                if (courseEnrolled != null) {
+                    List<String> enrolledStudents = new ArrayList<String>(Arrays.asList(courseEnrolled.split("/")));  // Turn that String into a list
+                    if (enrolledStudents.contains(Integer.toString(studentId))) {    // If the current student's id is in the list
+
+                        enrolledStudents.remove(Integer.toString(studentId));   // Remove the current student's id from the list
+
+                        String enrolledStudentsString = enrolledStudents.stream().collect(Collectors.joining("/", "", "/"));  // Turn the List into a String
+
+                        String query = " UPDATE " +     // Replace the old course enrolled with the new one
+                                TABLE_NAME + " SET " +
+                                COLUMN_COURSE_ENROLLED + " = '" + enrolledStudentsString + "' WHERE " +
+                                COLUMN_COURSE_ID + " = '" + courseId + "' ";
+                        db.execSQL(query);
+
+                        Toast.makeText(mainActivity, enrolledStudentsString, Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(mainActivity, "You have successfully removed yourself from this course", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(mainActivity, "You are not enrolled in this course", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            } while (cursor.moveToNext());
+
+        } else {
             // failure don't add anything
         }
         cursor.close();   // cleanup
