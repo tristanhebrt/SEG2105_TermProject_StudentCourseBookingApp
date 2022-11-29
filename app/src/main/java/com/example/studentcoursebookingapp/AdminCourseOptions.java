@@ -77,13 +77,13 @@ public class AdminCourseOptions extends AppCompatActivity implements View.OnClic
 
                 try {
                     courseModel = new CourseModel(-1, et_courseCode.getText().toString(), et_courseName.getText().toString(), "",
-                            -1, "", "", -1, -1);
+                            -1, "", "", -1, "");
                     Toast.makeText(AdminCourseOptions.this, "Course created", Toast.LENGTH_SHORT).show();
 
                 }catch (Exception e){
                     Toast.makeText(AdminCourseOptions.this, "Invalid information", Toast.LENGTH_SHORT).show();
                     courseModel = new CourseModel(-1, "", "", "", -1,
-                            "", "", -1, -1);
+                            "", "", -1, "");
                 }
 
                 if (courseDatabaseHelper.createCourse(courseModel)) { }

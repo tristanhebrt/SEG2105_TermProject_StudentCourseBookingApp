@@ -9,7 +9,7 @@ public class CourseModelTest {
             "Intro to Software Engineering", "Omar Badreddin",
             1234567, "Tuesdays 1-2:30, Wednesdays 2:30-4",
             "Principles of software engineering: Review of principles of object orientation. Object oriented analysis using UML. Frameworks and APIs. Introduction to the client-server architecture. Analysis, design and programming of simple servers and clients. Introduction to user interface technology.",
-            30,4);
+            30,"4");
 
     @Test
     public void testGetCourseInstructorId() {
@@ -33,6 +33,6 @@ public class CourseModelTest {
 
     @Test
     public void testGetCourseEnrolled() {
-        assertEquals("Testing Number of Students Enrolled", 4, courseModel.getCourseEnrolled());
+        assertEquals("Testing Number of Students Enrolled", "4", courseModel.getCourseEnrolled());
     }
 }

@@ -88,7 +88,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.enrollCourseStudentHomeButton:
-
+                courseDatabaseHelper.enrollStudent(selectedCourseId, currentId);
                 break;
 
             case R.id.viewAllCourses:
@@ -130,7 +130,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
 
     private void ShowMyCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
 
-        myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(StudentHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getMyCourses(currentId));
+        myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(StudentHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getStudentCourses(currentId));
         lv_myCourses.setAdapter(myCoursesArrayAdapter);
     }
 

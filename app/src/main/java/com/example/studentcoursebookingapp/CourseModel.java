@@ -13,11 +13,11 @@ public class CourseModel {
     private String courseDescription;
 
     private int courseCapacity;
-    private int courseEnrolled;
+    private String courseEnrolled;
 
     // constructors
     public CourseModel(int courseId, String courseCode, String courseName, String courseInstructor, int courseInstructorId, String courseDaysAndHours,
-                       String courseDescription, int courseCapacity, int courseEnrolled) {
+                       String courseDescription, int courseCapacity, String courseEnrolled) {
 
         this.courseId = courseId;
 
@@ -102,10 +102,10 @@ public class CourseModel {
         this.courseCapacity = courseCapacity;
     }
 
-    public int getCourseEnrolled() {
+    public String getCourseEnrolled() {
         return courseEnrolled;
     }
-    public void setCourseEnrolled(int courseEnrolled) {
+    public void setCourseEnrolled(String courseEnrolled) {
         this.courseEnrolled = courseEnrolled;
     }
 }
