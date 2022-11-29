@@ -514,12 +514,8 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                                 COLUMN_COURSE_ID + " = '" + courseId + "' ";
                         db.execSQL(query);
 
-                        Toast.makeText(mainActivity, enrolledStudentsString, Toast.LENGTH_SHORT).show();
-
-                        Toast.makeText(mainActivity, "You have successfully removed yourself from this course", Toast.LENGTH_SHORT).show();
-
                     } else {
-                        Toast.makeText(mainActivity, "You are not enrolled in this course", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
