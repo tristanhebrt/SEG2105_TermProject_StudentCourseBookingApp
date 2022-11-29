@@ -265,8 +265,12 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 String courseEnrolled = cursor.getString(8);
-                List<String> enrolledStudents = new ArrayList<String>(Arrays.asList(courseEnrolled.split("/")));
-                if (enrolledStudents.contains(Integer.toString(studentId))){ returnList.add(cursor.getInt(0)); }
+                if (courseEnrolled != null) {
+                    List<String> enrolledStudents = new ArrayList<String>(Arrays.asList(courseEnrolled.split("/")));
+                    if (enrolledStudents.contains(Integer.toString(studentId))) {
+                        returnList.add(cursor.getInt(0));
+                    }
+                }
 
             }while (cursor.moveToNext());
 
