@@ -184,32 +184,6 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public List<CourseModel> getStudentCourses(int currentId){
         List<CourseModel> returnList = new ArrayList<>();
         List<Integer> studentCoursesId = getCourseIdByStudentId(currentId);
@@ -283,51 +257,27 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public List<CourseModel> getSearchedCourses(String searchCode, String searchName, String searchDay){
-        List<CourseModel> returnList = new ArrayList<>();
+        List<CourseModel> returnList = new ArrayList<>();  // Creates returnList of type CourseModel
 
         // get data from database
 
-        String queryString = " SELECT * FROM " +
-                TABLE_NAME + " WHERE " +
-                COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
-                COLUMN_COURSE_NAME + " = '" + searchName + "' ";
+        String queryString;
 
-        if (searchDay != null) {
-            if (getCourseIdByDay(searchDay) >= 0) {
-                queryString = " SELECT * FROM " +
-                        TABLE_NAME + " WHERE " +
-                        COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
-                        COLUMN_COURSE_NAME + " = '" + searchName + "' OR " +
-                        COLUMN_COURSE_ID + " = '" + getCourseIdByDay(searchDay) + "'";
-            }
+        if (searchDay == null){
+            queryString = " SELECT * FROM " +
+                    TABLE_NAME + " WHERE " +
+                    COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
+                    COLUMN_COURSE_NAME + " = '" + searchName + "'";
+
+        } else if (searchDay != null && getCourseIdByDay(searchDay) >= 0){
+            queryString = " SELECT * FROM " +
+                    TABLE_NAME + " WHERE " +
+                    COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
+                    COLUMN_COURSE_NAME + " = '" + searchName + "' OR " +
+                    COLUMN_COURSE_ID + " = '" + getCourseIdByDay(searchDay) + "'";
+        } else {
+            return null;
         }
 
         SQLiteDatabase db = this.getReadableDatabase();
