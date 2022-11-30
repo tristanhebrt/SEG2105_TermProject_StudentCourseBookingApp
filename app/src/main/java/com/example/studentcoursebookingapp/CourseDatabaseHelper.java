@@ -262,23 +262,20 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
         // get data from database
 
-        String queryString;
+        int searchId;
 
-        if (searchDay == null){
-            queryString = " SELECT * FROM " +
-                    TABLE_NAME + " WHERE " +
-                    COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
-                    COLUMN_COURSE_NAME + " = '" + searchName + "'";
-
-        } else if (searchDay != null && getCourseIdByDay(searchDay) >= 0){
-            queryString = " SELECT * FROM " +
-                    TABLE_NAME + " WHERE " +
-                    COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
-                    COLUMN_COURSE_NAME + " = '" + searchName + "' OR " +
-                    COLUMN_COURSE_ID + " = '" + getCourseIdByDay(searchDay) + "'";
+        if (searchDay != ""){
+            searchId = (getCourseIdByDay(searchDay));
         } else {
-            return null;
+            searchId = -1;
         }
+
+
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_CODE + " = '" + searchCode + "' OR " +
+                COLUMN_COURSE_NAME + " = '" + searchName + "' OR " +
+                COLUMN_COURSE_ID + " = '" + searchId + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);

@@ -22,9 +22,9 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
 
     public int selectedCourseId = -1;
     public int currentId;
-    String searchCode = null;
-    String searchName = null;
-    String searchDay = null;
+    String searchCode = "";
+    String searchName = "";
+    String searchDay = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +119,9 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
                 lv_myCourses.setVisibility(View.GONE);
                 lv_searchedCourses.setVisibility(View.VISIBLE);
 
-                searchCode = String.valueOf(et_courseCode.getText());
-                searchName = String.valueOf(et_courseName.getText());
-                searchDay = String.valueOf(et_courseDay.getText());
+                searchCode += String.valueOf(et_courseCode.getText());
+                searchName += String.valueOf(et_courseName.getText());
+                searchDay += String.valueOf(et_courseDay.getText());
                 ShowSearchedCoursesOnListView(courseDatabaseHelper);
                 break;
         }
@@ -143,5 +143,8 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
 
         searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(StudentHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName, searchDay));
         lv_searchedCourses.setAdapter(searchedCoursesArrayAdapter);
+        searchCode = "";
+        searchName = "";
+        searchDay = "";
     }
 }
