@@ -25,8 +25,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
     public int selectedCourseId = -1;
     public int currentId;
-    String searchCode = null;
-    String searchName = null;
+    String searchCode = "";
+    String searchName = "";
 
     MainActivity mainActivity = new MainActivity();
 
@@ -155,8 +155,10 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
     private void ShowSearchedCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
 
-        searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName, null));
+        searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName, ""));
         lv_searchedCourses.setAdapter(searchedCoursesArrayAdapter);
+        searchCode = "";
+        searchName = "";
     }
 
     private void openInstructorCourseOptions() {
