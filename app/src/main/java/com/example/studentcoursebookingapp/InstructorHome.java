@@ -126,7 +126,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
                 lv_myCourses.setVisibility(View.VISIBLE);
 
                 courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
-                ShowMyCoursesOnListView(courseDatabaseHelper);
+                ShowMyCoursesOnListView(courseDatabaseHelper);7
                 break;
 
             case R.id.searchCourseInstructorHomeButton:

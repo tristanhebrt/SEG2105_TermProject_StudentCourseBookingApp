@@ -342,6 +342,69 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Method to get a courses day, start time and end time ( returns a list that can contain more than one day )
+
+
+
+
+    public boolean checkStudentCourseOverlap(int studentId, int selectedCourseId){
+
+        // define day and time frame of selected course ( from start to end )
+
+        // find courses on the same day as selected course
+        // define time frame of all those course ( from start2 to end2 )
+
+        // find overlapping courses ( for time in start2 to end2 ) if start >= time >= end
+
+        // check if the studentId is in any of the overlapping courses enrollment list
+
+
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Cursor getCourseID(String courseCode, String courseName){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = " SELECT " +
