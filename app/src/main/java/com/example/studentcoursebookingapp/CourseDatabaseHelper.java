@@ -265,7 +265,12 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         int searchId;
 
         if (searchDay != ""){
-            searchId = (getCourseIdByDay(searchDay));
+            try {
+                searchId = (getCourseIdByDay(searchDay));
+            } catch (Exception e) {
+                searchId = -1;
+            }
+
         } else {
             searchId = -1;
         }
@@ -311,6 +316,8 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getCourseIdByDay(String searchCourseDay){
+        searchCourseDay = searchCourseDay.substring(0,1).toUpperCase() + searchCourseDay.substring(1).toLowerCase();
+
         String queryString = " SELECT * FROM " +
                 TABLE_NAME;
 
