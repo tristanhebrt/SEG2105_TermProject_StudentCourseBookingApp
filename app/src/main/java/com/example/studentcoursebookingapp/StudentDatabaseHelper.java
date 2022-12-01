@@ -30,9 +30,13 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
     // called when the database is first accessed
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + STUDENT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " " +COLUMN_STUDENT_FIRSTNAME + " TEXT, " + COLUMN_STUDENT_LASTNAME + " TEXT, " + COLUMN_STUDENT_EMAIL + " TEXT, " +
-                " " +COLUMN_STUDENT_USERNAME + " TEXT, " + COLUMN_STUDENT_PASSWORD + " TEXT)";
+        String createTableStatement = "CREATE TABLE " + STUDENT_TABLE + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + " " +
+                COLUMN_STUDENT_FIRSTNAME + " TEXT, " +
+                COLUMN_STUDENT_LASTNAME + " TEXT, " +
+                COLUMN_STUDENT_EMAIL + " TEXT, " + " " +
+                COLUMN_STUDENT_USERNAME + " TEXT, " +
+                COLUMN_STUDENT_PASSWORD + " TEXT)";
 
         db.execSQL(createTableStatement);
     }
@@ -146,21 +150,35 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
 
     public String getStudentInfo(int studentId){
 
-        System.out.println("getStudent info called");
+        System.out.println("getStudent info was called");
+
+        System.out.println("studentId : " + studentId);
 
         String studentInfo = "nothing";
 
-        try {
+        System.out.println("no error0");
 
-            String queryString = " SELECT * FROM " +
+        try {
+            System.out.println("no error1");
+
+            String query = " SELECT * FROM " +
                     STUDENT_TABLE + " WHERE " +
-                    COLUMN_ID + " = '" + studentId + "' ";
+                    COLUMN_ID + " = '" + studentId + "'";
+
+            System.out.println("no error1.2");  // doesn't go any further
 
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.rawQuery(queryString, null);
+
+            System.out.println("no error1.4");
+
+            Cursor cursor = db.rawQuery(query, null);
+
+            System.out.println("no error1.6");
 
             if (cursor.moveToFirst()) {
+                System.out.println("no error2");
                 do {
+                    System.out.println("no error3");
                     String firstName = cursor.getString(1);
                     String lastName = cursor.getString(2);
                     String username = cursor.getString(4);
@@ -177,6 +195,7 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             } else {
                 // failed
+                System.out.println("error");
             }
             cursor.close();
             db.close();

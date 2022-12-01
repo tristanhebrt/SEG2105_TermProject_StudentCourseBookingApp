@@ -132,13 +132,15 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
                         try {
                             studentDatabaseHelper = new StudentDatabaseHelper(null);
-                            String studentInfo = studentDatabaseHelper.getStudentInfo(studentId);  // isn't calling function
+
+                            String studentInfo = studentDatabaseHelper.getStudentInfo(studentId);
+
                             System.out.println("studentInfo :" + studentInfo);
 
                             returnList.add(studentInfo);
 
                         }catch (Exception e){
-                            System.out.println("nothing found");
+                            System.out.println("error trying studentDatabaseHelper.getStudentInfo(studentId)");
                         }
                     }
                 }
