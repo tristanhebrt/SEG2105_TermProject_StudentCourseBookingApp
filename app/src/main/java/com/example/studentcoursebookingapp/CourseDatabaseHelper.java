@@ -340,69 +340,137 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
+    public boolean checkIfStudentIsEnrolled(int studentId, int courseId){
+        List<String> enrolledStudentsList = new ArrayList<>();
 
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseId + "'";   // Defines where to look
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
 
+        if(cursor.moveToFirst()){
+            do{
+                String enrolledStudentsString = cursor.getString(8);    // Select the COLUMN_COURSE_ENROLLED
+                enrolledStudentsList = Arrays.asList(enrolledStudentsString.split("/"));  // Split the student ids into a list
+                if (enrolledStudentsList.contains(studentId)){  // if student id is in the course's
+                    return true;
+                }
 
+            }while (cursor.moveToNext());
 
+        }else{
+            // failure don't add anything
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // Method to get a courses day, start time and end time ( returns a list that can contain more than one day )
-
-
-
-
-    public boolean checkStudentCourseOverlap(int studentId, int selectedCourseId){
-
-        // define day and time frame of selected course ( from start to end )
-
-        // find courses on the same day as selected course
-        // define time frame of all those course ( from start2 to end2 )
-
-        // find overlapping courses ( for time in start2 to end2 ) if start >= time >= end
-
-        // check if the studentId is in any of the overlapping courses enrollment list
-
-
+        cursor.close();   // cleanup
+        db.close();
 
         return false;
     }
 
+    // Method to get a courses day, start time and end time ( returns a list that can contain more than one day )
+    public List<String> getCourseDaysAndHoursList(int courseId){
+        List<String> courseDaysAndHoursList = new ArrayList<>();
+        List<String> courseDaysAndHoursFinalList = new ArrayList<>();
+
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseId + "'";   // Defines where to look
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String courseDaysAndHours = cursor.getString(5);    // Select the COLUMN_COURSE_DAYS_AND_HOURS
+                courseDaysAndHoursList = Arrays.asList(courseDaysAndHours.split("/"));  // Split the days and hours into a list
+
+                for (int i = 0; i < courseDaysAndHoursList.size(); i++) {  // go through the course list
+                    if (i % 2 == 0){  // if even (day)
+                        courseDaysAndHoursFinalList.add(courseDaysAndHoursList.get(i));  // add day to final list
+                    } else {  // if odd (hours)
+                        String hours = courseDaysAndHoursList.get(i);   // turn hours into a String
+                        String [] fromTo = hours.split("to", 1);  // split String at "to"
+
+                        courseDaysAndHoursFinalList.add(fromTo[0]);  // add start hour to final list
+                        courseDaysAndHoursFinalList.add(fromTo[1]);  // add end hour to final list
+                    }
+                }
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+
+        cursor.close();   // cleanup
+        db.close();
+
+        return courseDaysAndHoursList;  // return list where day, start time and end time are separated
+    }
+
+    public boolean checkStudentCourseOverlap(int studentId, int selectedCourseId){
+        // find course from selectedCourseId, select COLUMN_COURSE_DAYS_AND_HOURS from the selected course, turn into organised list
+        List<String> selectedCourseDaysAndHoursList = new ArrayList<String>(getCourseDaysAndHoursList(selectedCourseId));
+
+        // define day and time frame of selected course ( from start to end )
+
+        // find courses on the same day as selected course
+
+        int maxCourseId = -1;
+
+        String queryString = " SELECT MAX( '" + COLUMN_COURSE_ID + "' ) FROM '" + TABLE_NAME + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                maxCourseId = cursor.getInt(0);  // get highest course Id
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+
+        cursor.close();   // cleanup
+        db.close();
 
 
 
+        for (int i = 0; i < selectedCourseDaysAndHoursList.size(); i++) {  // go through the selected course day and time
+            if (i % 3 == 0){  // if even (day)
+                for (int courseId = 0; courseId < maxCourseId; courseId ++){  // go through all course ids
+                    List<String> checkingDay = new ArrayList<>(getCourseDaysAndHoursList(courseId));  // get checked course day and time
 
+                    for (int j = 0; j < checkingDay.size(); j++) {  // go through the day and time list
+                        if (j % 3 == 0){  // go through the days
+                            String dayOfWeek = checkingDay.get(j); // declare an assign value to dayOfWeek
 
+                            if (selectedCourseDaysAndHoursList.contains(dayOfWeek)){  // if selected course has a class on the same day
+                                int selectedWeekIndex = selectedCourseDaysAndHoursList.indexOf(dayOfWeek); // get index of day
+                                int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(selectedWeekIndex+1));  // get selected class start time
+                                int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(selectedWeekIndex+2));   // get selected class end time
 
+                                int start = Integer.parseInt(checkingDay.get(j+1));   // get class start time
+                                int end = Integer.parseInt(checkingDay.get(j+2));    // get class end time
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                if (end < selectedStart || start > selectedEnd){  // if there is no overlap
+                                    if (!checkIfStudentIsEnrolled(studentId, courseId)){  // if the student isn't enrolled in the overlapping class
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
     public Cursor getCourseID(String courseCode, String courseName){
