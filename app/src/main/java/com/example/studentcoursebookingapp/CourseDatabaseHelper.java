@@ -359,7 +359,12 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 String courseDaysAndHours = cursor.getString(5);    // Select the COLUMN_COURSE_DAYS_AND_HOURS
-                courseDaysAndHoursList = Arrays.asList(courseDaysAndHours.split("/"));  // Split the days and hours into a list
+
+                try {
+                    courseDaysAndHoursList = Arrays.asList(courseDaysAndHours.split("/"));  // Split the days and hours into a list
+                } catch (Exception e) {
+
+                }
 
                 for (int i = 0; i < courseDaysAndHoursList.size(); i++) {  // go through the course list
                     if (i % 2 == 0){  // if even (day)
