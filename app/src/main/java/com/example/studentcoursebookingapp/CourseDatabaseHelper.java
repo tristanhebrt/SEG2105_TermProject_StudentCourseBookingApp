@@ -340,36 +340,6 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
-    public boolean checkIfStudentIsEnrolled(int studentId, int courseId){
-        List<String> enrolledStudentsList = new ArrayList<>();
-
-        String queryString = " SELECT * FROM " +
-                TABLE_NAME + " WHERE " +
-                COLUMN_COURSE_ID + " = '" + courseId + "'";   // Defines where to look
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-            do{
-                String enrolledStudentsString = cursor.getString(8);    // Select the COLUMN_COURSE_ENROLLED
-                enrolledStudentsList = Arrays.asList(enrolledStudentsString.split("/"));  // Split the student ids into a list
-                if (enrolledStudentsList.contains(studentId)){  // if student id is in the course's
-                    return true;
-                }
-
-            }while (cursor.moveToNext());
-
-        }else{
-            // failure don't add anything
-        }
-
-        cursor.close();   // cleanup
-        db.close();
-
-        return false;
-    }
-
     // Method to get a courses day, start time and end time ( returns a list that can contain more than one day )
     public List<String> getCourseDaysAndHoursList(int courseId){
         List<String> courseDaysAndHoursList = new ArrayList<>();
@@ -534,16 +504,46 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 TABLE_NAME + " SET " +
                 COLUMN_COURSE_INSTRUCTOR + " = '" + courseInstructor + "' , " +
                 COLUMN_COURSE_INSTRUCTOR_ID + " = '" + courseInstructorId + "' , " +
-                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + courseDaysAndHours + "' , " +
+                COLUMN_COURSE_DAYS_AND_HOURS + " = '" + "/" + courseDaysAndHours + "' , " +
                 COLUMN_COURSE_DESCRIPTION + " = '" + courseDescription + "' , " +
-                COLUMN_COURSE_ENROLLED + " = '" + " " + "' , " +
+                COLUMN_COURSE_ENROLLED + " = '" + "/" + "' , " +
                 COLUMN_COURSE_CAPACITY + " = '" + courseCapacity + "' WHERE " +
                 COLUMN_COURSE_ID + " = '" + courseID + "' ";
 
         db.execSQL(query);
     }
 
-    public void enrollStudent(int courseId, int studentId){
+    public boolean checkIfStudentIsEnrolled(int studentId, int courseId){
+        List<String> enrolledStudentsList = new ArrayList<>();
+
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + courseId + "'";   // Defines where to look
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String enrolledStudentsString = cursor.getString(8);    // Select the COLUMN_COURSE_ENROLLED
+                enrolledStudentsList = Arrays.asList(enrolledStudentsString.split("/"));  // Split the student ids into a list
+                if (enrolledStudentsList.contains(Integer.toString(studentId))){  // if student id is in the course's
+                    return true;
+                }
+
+            }while (cursor.moveToNext());
+
+        }else{
+            // failure don't add anything
+        }
+
+        cursor.close();   // cleanup
+        db.close();
+
+        return false;
+    }
+
+    public boolean enrollStudent(int courseId, int studentId){
 
         String queryString = " SELECT * FROM " +
                 TABLE_NAME + " WHERE " +
@@ -552,25 +552,38 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
-        String enrolled = " ";
+        String enrolled = "";
         if(cursor.moveToFirst()){
             do{
-                enrolled = cursor.getString(8);
-                enrolled += Integer.toString(studentId) + "/";
+                if (!checkIfStudentIsEnrolled(studentId, courseId)) {
+                    enrolled = cursor.getString(8);  // get the course's enrolled student ids String
+                    enrolled += Integer.toString(studentId) + "/";  // add the current student's id to the course's enrollment String
+
+                    SQLiteDatabase db2 = this.getReadableDatabase();
+                    Cursor cursor2 = db2.rawQuery(queryString, null);
+
+                    String queryString2 = " UPDATE " +
+                            TABLE_NAME + " SET " +
+                            COLUMN_COURSE_ENROLLED + " = '" + enrolled + "' WHERE " +
+                            COLUMN_COURSE_ID + " = '" + courseId + "' ";
+                    db2.execSQL(queryString2);  // replace old enrollment String with the new one
+
+                    cursor2.close();   // cleanup
+                    db2.close();
+
+                    return true;
+                }
 
             }while (cursor.moveToNext());
 
-            String query = " UPDATE " +
-                    TABLE_NAME + " SET " +
-                    COLUMN_COURSE_ENROLLED + " = '" + enrolled + "' WHERE " +
-                    COLUMN_COURSE_ID + " = '" + courseId + "' ";
-            db.execSQL(query);
 
         }else{
             // failure don't add anything
         }
         cursor.close();   // cleanup
         db.close();
+
+        return false;
     }
 
     public void unEnrollStudent(int courseId, int studentId) {

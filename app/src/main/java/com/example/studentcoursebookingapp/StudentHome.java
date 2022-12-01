@@ -89,7 +89,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.enrollCourseStudentHomeButton:
-                courseDatabaseHelper.enrollStudent(selectedCourseId, currentId);
+                boolean enrolled = courseDatabaseHelper.enrollStudent(selectedCourseId, currentId);
                 break;
 
             case R.id.unEnrollCourseStudentHomeButton:
