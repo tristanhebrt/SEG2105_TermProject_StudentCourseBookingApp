@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_above="@+id/instructorHomeTable"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
@@ -22,10 +21,10 @@
 
     <TableLayout
         android:id="@+id/instructorHomeTable"
+        android:layout_below="@+id/INSTRUCTOR"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/allCoursesList"
-        android:layout_marginBottom="30dp">
+        android:layout_height="wrap_content">
 
         <TableRow
             android:layout_width="match_parent"
@@ -100,6 +99,7 @@
 
     <ListView
         android:id="@+id/allCoursesList"
+        android:layout_below="@+id/instructorHomeTable"
 
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -110,6 +110,7 @@
 
     <ListView
         android:id="@+id/myCoursesList"
+        android:layout_below="@+id/instructorHomeTable"
 
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -120,6 +121,7 @@
 
     <ListView
         android:id="@+id/searchedCoursesList"
+        android:layout_below="@+id/instructorHomeTable"
 
         android:layout_width="match_parent"
         android:layout_height="500dp"

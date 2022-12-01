@@ -39,17 +39,24 @@ public class CourseModel {
 
     @Override
     public String toString() {
-        return "CourseModel{" +
-                "courseId=" + courseId +
-                ", courseCode='" + courseCode + '\'' +
-                ", courseName='" + courseName + '\'' +
-                ", courseInstructor='" + courseInstructor + '\'' +
-                ", courseInstructorId='" + courseInstructorId +
-                ", courseDays='" + courseDaysAndHours + '\'' +
-                ", courseDescription='" + courseDescription + '\'' +
-                ", courseCapacity=" + courseCapacity +
-                ", courseEnrolled=" + courseEnrolled +
-                '}';
+        return  "Course code : " + courseCode +
+                "\nCourse name : " + courseName +
+                "\nCourse instructor : " + courseInstructor +
+                "\nCourse days and hours : " + courseDaysAndHours +
+                "\nCourse description : " + courseDescription +
+                "\nCourse capacity : " + courseCapacity;
+
+              //  "CourseModel{" +
+              //  "courseId=" + courseId +
+              //  ", courseCode='" + courseCode + '\'' +
+              //  ", courseName='" + courseName + '\'' +
+              //  ", courseInstructor='" + courseInstructor + '\'' +
+              //  ", courseInstructorId='" + courseInstructorId +
+              //  ", courseDays='" + courseDaysAndHours + '\'' +
+              //  ", courseDescription='" + courseDescription + '\'' +
+              //  ", courseCapacity=" + courseCapacity +
+              //  ", courseEnrolled=" + courseEnrolled +
+              //  '}';
     }
 
     // getters and setters

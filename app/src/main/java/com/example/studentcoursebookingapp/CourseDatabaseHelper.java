@@ -188,6 +188,57 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public List<CourseModel> getAllStudentCourses(){
+        List<CourseModel> returnList = new ArrayList<>();
+        List<String> returnListString = new ArrayList<>();
+
+        // get data from database
+        String queryString = "SELECT * FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_COURSE_INSTRUCTOR_ID + " <> 0 ";  // only select courses with an instructor
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int courseId = cursor.getInt(0);
+
+                String courseCode = cursor.getString(1);
+                String courseName = cursor.getString(2);
+
+                String courseInstructor = cursor.getString(3);
+                int courseInstructorId = cursor.getInt(4);
+
+                String courseDaysAndHours = cursor.getString(5);
+
+                String courseDescription = cursor.getString(6);
+
+                int courseCapacity = cursor.getInt(7);
+
+                String courseEnrolled = cursor.getString(8);
+
+
+                CourseModel newCourse = new CourseModel(courseId, courseCode, courseName, courseInstructor, courseInstructorId, courseDaysAndHours,
+                        courseDescription, courseCapacity, courseEnrolled);
+                returnList.add(newCourse);
+
+                String newCourseString = "Course code : " + courseCode +
+                        "\nCourse name : " + courseName +
+                        "\nCourse instructor : " + courseInstructor +
+                        "\nCourse days and hours : " + courseDaysAndHours +
+                        "\nCourse description : " + courseDescription +
+                        "\nCourse capacity : " + courseCapacity;
+                returnListString.add(newCourseString);
+
+            }while (cursor.moveToNext());
+        }else{
+            // failed
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
     public List<CourseModel> getStudentCourses(int currentId){
         List<CourseModel> returnList = new ArrayList<>();
         List<Integer> studentCoursesId = getCourseIdByStudentId(currentId);
@@ -196,7 +247,10 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
             String queryString = " SELECT * FROM " +
                     TABLE_NAME + " WHERE " +
-                    COLUMN_COURSE_ID + " = '" + studentCoursesId.get(i) + "' ";
+                    COLUMN_COURSE_ID + " = '" + studentCoursesId.get(i) + "'";
+
+            //  + "' AND '" + COLUMN_COURSE_DAYS_AND_HOURS + "' != null "
+
 
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(queryString, null);
