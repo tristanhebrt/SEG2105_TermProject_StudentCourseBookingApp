@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class StudentDatabaseHelper extends SQLiteOpenHelper {
@@ -141,5 +142,34 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         @SuppressLint("Range") String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_STUDENT_FIRSTNAME));
         return cursor;
+    }
+
+    public String getStudentInfo(int studentId){
+        String studentInfo = "";
+
+        String queryString = " SELECT * FROM " +
+                STUDENT_TABLE + " WHERE " +
+                COLUMN_ID + " = '" + studentId + "' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String firstName = cursor.getString(1);
+                String lastName = cursor.getString(2);
+                String username = cursor.getString(4);
+
+                studentInfo = "Name : " + firstName + " " + lastName +
+                        "Username : " + username;
+
+            }while (cursor.moveToNext());
+        }else{
+            // failed
+        }
+        cursor.close();
+        db.close();
+
+        return studentInfo;
     }
 }

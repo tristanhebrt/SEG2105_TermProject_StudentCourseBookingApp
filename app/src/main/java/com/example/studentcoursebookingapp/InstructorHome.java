@@ -17,11 +17,11 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 public class InstructorHome extends AppCompatActivity implements View.OnClickListener {
-    Button btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search;
+    Button btn_editSelectedCourse, btn_viewStudentsInSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search;
     EditText et_courseCode, et_courseName;
-    ListView lv_allCourses, lv_myCourses, lv_searchedCourses;
+    ListView lv_studentsInCourse, lv_allCourses, lv_myCourses, lv_searchedCourses;
     CourseDatabaseHelper courseDatabaseHelper;
-    ArrayAdapter allCoursesArrayAdapter, myCoursesArrayAdapter, searchedCoursesArrayAdapter;
+    ArrayAdapter studentsInCourseArrayAdapter, allCoursesArrayAdapter, myCoursesArrayAdapter, searchedCoursesArrayAdapter;
 
     public int selectedCourseId = -1;
     public int currentId;
@@ -37,6 +37,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_instructor_home);
 
         btn_editSelectedCourse = (Button) findViewById(R.id.editSelectedCourse);
+        btn_viewStudentsInSelectedCourse = (Button) findViewById(R.id.viewStudentsInSelectedCourse);
         btn_viewAllCourses = (Button) findViewById(R.id.viewAllCourses);
         btn_viewMyCourses = (Button) findViewById(R.id.viewMyCourses);
         btn_search = (Button) findViewById(R.id.searchCourseInstructorHomeButton);
@@ -45,6 +46,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         et_courseCode = (EditText) findViewById(R.id.searchCourseCodeInstructorHomeEditText);
         et_courseName = (EditText) findViewById(R.id.searchCourseNameInstructorHomeEditText);
 
+        lv_studentsInCourse = (ListView) findViewById(R.id.studentsInCourseList);
         lv_allCourses = (ListView) findViewById(R.id.allCoursesList);
         lv_myCourses = (ListView) findViewById(R.id.myCoursesList);
         lv_searchedCourses = (ListView) findViewById(R.id.searchedCoursesList);
@@ -87,7 +89,8 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setClickListeners() {
-        for (Button button : Arrays.asList(btn_editSelectedCourse, btn_viewAllCourses, btn_viewMyCourses, btn_search)){
+        for (Button button : Arrays.asList(btn_editSelectedCourse, btn_viewStudentsInSelectedCourse,
+                btn_viewAllCourses, btn_viewMyCourses, btn_search)){
             button.setOnClickListener(this);
         }
     }
@@ -111,34 +114,69 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
 
+            case R.id.viewStudentsInSelectedCourse:
+                if (selectedCourseId != -1) {
+                    lv_myCourses.setVisibility(View.GONE);
+                    lv_searchedCourses.setVisibility(View.GONE);
+                    lv_allCourses.setVisibility(View.GONE);
+                    lv_studentsInCourse.setVisibility(View.VISIBLE);
+
+                }
+
+                if (selectedCourseId != -1) {
+                    int selectedInstructorId = courseDatabaseHelper.getCourseInstructorId(selectedCourseId); // selected course's instructor id
+
+                    if (selectedInstructorId == currentId) { // if the selected course doesn't have an assigned instructor or if the assigned instructor is the current user
+                        lv_myCourses.setVisibility(View.GONE);
+                        lv_searchedCourses.setVisibility(View.GONE);
+                        lv_allCourses.setVisibility(View.GONE);
+                        lv_studentsInCourse.setVisibility(View.VISIBLE);
+
+                        ShowEnrolledStudentsOnListView(courseDatabaseHelper);
+                    }else{
+                        Toast.makeText(this, "You are not the assigned instructor.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Please select a course.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+
             case R.id.viewAllCourses:
                 lv_myCourses.setVisibility(View.GONE);
                 lv_searchedCourses.setVisibility(View.GONE);
                 lv_allCourses.setVisibility(View.VISIBLE);
+                lv_studentsInCourse.setVisibility(View.GONE);
 
-                courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowAllCoursesOnListView(courseDatabaseHelper);
                 break;
 
             case R.id.viewMyCourses:
-                lv_allCourses.setVisibility(View.GONE);
-                lv_searchedCourses.setVisibility(View.GONE);
                 lv_myCourses.setVisibility(View.VISIBLE);
+                lv_searchedCourses.setVisibility(View.GONE);
+                lv_allCourses.setVisibility(View.GONE);
+                lv_studentsInCourse.setVisibility(View.GONE);
 
-                courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowMyCoursesOnListView(courseDatabaseHelper);
                 break;
 
             case R.id.searchCourseInstructorHomeButton:
-                lv_allCourses.setVisibility(View.GONE);
                 lv_myCourses.setVisibility(View.GONE);
                 lv_searchedCourses.setVisibility(View.VISIBLE);
+                lv_allCourses.setVisibility(View.GONE);
+                lv_studentsInCourse.setVisibility(View.GONE);
 
                 searchCode = String.valueOf(et_courseCode.getText());
                 searchName = String.valueOf(et_courseName.getText());
+
                 ShowSearchedCoursesOnListView(courseDatabaseHelper);
                 break;
         }
+    }
+
+    private void ShowEnrolledStudentsOnListView(CourseDatabaseHelper courseDatabaseHelper) {
+        studentsInCourseArrayAdapter = new ArrayAdapter<String>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getStudentsInCourse(selectedCourseId));
+        lv_studentsInCourse.setAdapter(studentsInCourseArrayAdapter);
     }
 
     private void ShowAllCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {

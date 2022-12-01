@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
     MainActivity mainActivity = new MainActivity();
+    StudentDatabaseHelper studentDatabaseHelper;
 
     public static final String TABLE_NAME = "COURSE_TABLE";
     public static final String COLUMN_COURSE_ID = "ID";
@@ -104,6 +105,43 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_COURSE_ID + " = '" + courseID + "' ";
 
         db.execSQL(query);
+    }
+
+    public List<String> getStudentsInCourse(int selectedCourseId){
+        List<String> returnList = new ArrayList<>();
+
+        // get data from database
+        String queryString = " SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_COURSE_ID + " = '" + selectedCourseId + "' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int courseId = cursor.getInt(0);
+                String courseEnrolled = cursor.getString(8);
+
+                if (courseEnrolled != null) {
+                    List<String> enrolledStudents = new ArrayList<String>(Arrays.asList(courseEnrolled.split("/")));
+
+                    for (int i = 0; i < enrolledStudents.size(); i++){  // go through the enrolled students list
+                        int studentId = Integer.parseInt(enrolledStudents.get(i));
+
+                        String studentInfo = studentDatabaseHelper.getStudentInfo(studentId);
+
+                        returnList.add(studentInfo);
+                    }
+                }
+            }while (cursor.moveToNext());
+
+        }else{
+            // failed
+        }
+        cursor.close();
+        db.close();
+        return returnList;
     }
 
     public List<CourseModel> getCourses(){
