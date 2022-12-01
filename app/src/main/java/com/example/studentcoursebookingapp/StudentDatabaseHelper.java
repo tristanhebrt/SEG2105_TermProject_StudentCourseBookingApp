@@ -145,31 +145,46 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String getStudentInfo(int studentId){
-        String studentInfo = "";
 
-        String queryString = " SELECT * FROM " +
-                STUDENT_TABLE + " WHERE " +
-                COLUMN_ID + " = '" + studentId + "' ";
+        System.out.println("getStudent info called");
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
+        String studentInfo = "nothing";
 
-        if(cursor.moveToFirst()){
-            do{
-                String firstName = cursor.getString(1);
-                String lastName = cursor.getString(2);
-                String username = cursor.getString(4);
+        try {
 
-                studentInfo = "Name : " + firstName + " " + lastName +
-                        "Username : " + username;
+            String queryString = " SELECT * FROM " +
+                    STUDENT_TABLE + " WHERE " +
+                    COLUMN_ID + " = '" + studentId + "' ";
 
-            }while (cursor.moveToNext());
-        }else{
-            // failed
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(queryString, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String firstName = cursor.getString(1);
+                    String lastName = cursor.getString(2);
+                    String username = cursor.getString(4);
+
+                    System.out.println("firstName :" + firstName);
+                    System.out.println("lastName :" + lastName);
+                    System.out.println("username :" + username);
+
+                    studentInfo = "Name : " + firstName + " " + lastName +
+                            "Username : " + username;
+
+                    System.out.println("studentInfo :" + studentInfo);
+
+                } while (cursor.moveToNext());
+            } else {
+                // failed
+            }
+            cursor.close();
+            db.close();
+
+            return studentInfo;
+
+        }catch (Exception e) {
+            return studentInfo;
         }
-        cursor.close();
-        db.close();
-
-        return studentInfo;
     }
 }

@@ -116,14 +116,6 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
 
             case R.id.viewStudentsInSelectedCourse:
                 if (selectedCourseId != -1) {
-                    lv_myCourses.setVisibility(View.GONE);
-                    lv_searchedCourses.setVisibility(View.GONE);
-                    lv_allCourses.setVisibility(View.GONE);
-                    lv_studentsInCourse.setVisibility(View.VISIBLE);
-
-                }
-
-                if (selectedCourseId != -1) {
                     int selectedInstructorId = courseDatabaseHelper.getCourseInstructorId(selectedCourseId); // selected course's instructor id
 
                     if (selectedInstructorId == currentId) { // if the selected course doesn't have an assigned instructor or if the assigned instructor is the current user
@@ -148,6 +140,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
                 lv_allCourses.setVisibility(View.VISIBLE);
                 lv_studentsInCourse.setVisibility(View.GONE);
 
+                courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowAllCoursesOnListView(courseDatabaseHelper);
                 break;
 
@@ -157,6 +150,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
                 lv_allCourses.setVisibility(View.GONE);
                 lv_studentsInCourse.setVisibility(View.GONE);
 
+                courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowMyCoursesOnListView(courseDatabaseHelper);
                 break;
 
@@ -169,6 +163,7 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
                 searchCode = String.valueOf(et_courseCode.getText());
                 searchName = String.valueOf(et_courseName.getText());
 
+                courseDatabaseHelper = new CourseDatabaseHelper(InstructorHome.this);
                 ShowSearchedCoursesOnListView(courseDatabaseHelper);
                 break;
         }

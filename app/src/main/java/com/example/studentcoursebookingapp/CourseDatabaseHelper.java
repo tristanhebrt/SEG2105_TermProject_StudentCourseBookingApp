@@ -120,18 +120,26 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                int courseId = cursor.getInt(0);
                 String courseEnrolled = cursor.getString(8);
 
                 if (courseEnrolled != null) {
                     List<String> enrolledStudents = new ArrayList<String>(Arrays.asList(courseEnrolled.split("/")));
 
-                    for (int i = 0; i < enrolledStudents.size(); i++){  // go through the enrolled students list
+                    for (int i = 1; i < enrolledStudents.size(); i++){  // go through the enrolled students list
+
                         int studentId = Integer.parseInt(enrolledStudents.get(i));
+                        System.out.println("studentId :" + studentId);
 
-                        String studentInfo = studentDatabaseHelper.getStudentInfo(studentId);
+                        try {
+                            studentDatabaseHelper = new StudentDatabaseHelper(null);
+                            String studentInfo = studentDatabaseHelper.getStudentInfo(studentId);  // isn't calling function
+                            System.out.println("studentInfo :" + studentInfo);
 
-                        returnList.add(studentInfo);
+                            returnList.add(studentInfo);
+
+                        }catch (Exception e){
+                            System.out.println("nothing found");
+                        }
                     }
                 }
             }while (cursor.moveToNext());
