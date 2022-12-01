@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -368,16 +372,8 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                         String hours = courseDaysAndHoursList.get(i+1);   // turn hours into a String
                         String [] fromTo = hours.split(" to ", 2);  // split String at "to"
 
-                        System.out.println("courseDaysAndHoursList = " + courseDaysAndHoursList.toString());
-
-                        System.out.println("hours = " + hours);
-
-                        System.out.println("fromTo = " + Arrays.toString(fromTo));
-
                         courseDaysAndHoursFinalList.add(fromTo[0]);  // add start hour to final list
                         courseDaysAndHoursFinalList.add(fromTo[1]);  // add end hour to final list
-
-                        System.out.println("courseDaysAndHoursFinalList = " + courseDaysAndHoursFinalList.toString());
                     }
                 }
 
@@ -390,55 +386,40 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();   // cleanup
         db.close();
 
-        return courseDaysAndHoursList;  // return list where day, start time and end time are separated
+
+        return courseDaysAndHoursFinalList;  // return list where day, start time and end time are separated
     }
 
     public boolean checkStudentCourseOverlap(int studentId, int selectedCourseId){
         // find course from selectedCourseId, select COLUMN_COURSE_DAYS_AND_HOURS from the selected course, turn into organised list
         List<String> selectedCourseDaysAndHoursList = new ArrayList<String>(getCourseDaysAndHoursList(selectedCourseId));
 
-        // define day and time frame of selected course ( from start to end )
 
-        // find courses on the same day as selected course
-
-        int maxCourseId = -1;
-
-        String queryString = " SELECT MAX( '" + COLUMN_COURSE_ID + "' ) FROM '" + TABLE_NAME + "'";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-            do{
-                maxCourseId = cursor.getInt(0);  // get highest course Id
-
-            }while (cursor.moveToNext());
-
-        }else{
-            // failure don't add anything
-        }
-
-        cursor.close();   // cleanup
-        db.close();
-
-
+        int maxCourseId = 100;
 
         for (int i = 0; i < selectedCourseDaysAndHoursList.size(); i++) {  // go through the selected course day and time
-            if (i % 3 == 0){  // if even (day)
+            if (i % 3 == 0){  // go through the days of the selected course
+                String selectedDayOfWeek = selectedCourseDaysAndHoursList.get(i);
+
+                System.out.println("selected: " + (selectedCourseDaysAndHoursList.get(i)).toString());
+
                 for (int courseId = 0; courseId < maxCourseId; courseId ++){  // go through all course ids
                     List<String> checkingDay = new ArrayList<>(getCourseDaysAndHoursList(courseId));  // get checked course day and time
 
                     for (int j = 0; j < checkingDay.size(); j++) {  // go through the day and time list
                         if (j % 3 == 0){  // go through the days
+                            int start = Integer.parseInt(checkingDay.get(j+1));   // get class start time
+                            int end = Integer.parseInt(checkingDay.get(j+2));    // get class end time
+                            System.out.println("test overlap: " + (checkingDay.get(j)).toString());
                             String dayOfWeek = checkingDay.get(j); // declare an assign value to dayOfWeek
 
-                            if (selectedCourseDaysAndHoursList.contains(dayOfWeek)){  // if selected course has a class on the same day
-                                int selectedWeekIndex = selectedCourseDaysAndHoursList.indexOf(dayOfWeek); // get index of day
-                                int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(selectedWeekIndex+1));  // get selected class start time
-                                int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(selectedWeekIndex+2));   // get selected class end time
+                            if (selectedDayOfWeek == dayOfWeek){  // if selected course has a class on the same day
+                                int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(i+1));  // get selected class start time
+                                int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(i+2));   // get selected class end time
+                                System.out.println("selected: " + selectedStart + " : " + selectedEnd);
 
-                                int start = Integer.parseInt(checkingDay.get(j+1));   // get class start time
-                                int end = Integer.parseInt(checkingDay.get(j+2));    // get class end time
+
+                                System.out.println("test overlap: " + start + " : " + end);
 
                                 if (end < selectedStart || start > selectedEnd){  // if there is no overlap
                                     if (!checkIfStudentIsEnrolled(studentId, courseId)){  // if the student isn't enrolled in the overlapping class
@@ -567,7 +548,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         String enrolled = "";
         if(cursor.moveToFirst()){
             do{
-                if (!checkIfStudentIsEnrolled(studentId, courseId) && !checkStudentCourseOverlap(studentId, courseId)) {
+                if (!checkIfStudentIsEnrolled(studentId, courseId) && !checkStudentCourseOverlap(studentId, courseId)) {  // if the student isn't already enrolled and there is no overlap
                     enrolled = cursor.getString(8);  // get the course's enrolled student ids String
                     enrolled += Integer.toString(studentId) + "/";  // add the current student's id to the course's enrollment String
 
