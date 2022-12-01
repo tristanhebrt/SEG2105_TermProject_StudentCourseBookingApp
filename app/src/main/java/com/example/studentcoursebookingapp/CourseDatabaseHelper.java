@@ -359,13 +359,25 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
                 for (int i = 0; i < courseDaysAndHoursList.size(); i++) {  // go through the course list
                     if (i % 2 == 0){  // if even (day)
-                        courseDaysAndHoursFinalList.add(courseDaysAndHoursList.get(i));  // add day to final list
+                        try {
+                            courseDaysAndHoursFinalList.add(courseDaysAndHoursList.get(i + 1));  // add day to final list
+                        }catch (Exception e){
+
+                        }
                     } else {  // if odd (hours)
-                        String hours = courseDaysAndHoursList.get(i);   // turn hours into a String
-                        String [] fromTo = hours.split("to", 1);  // split String at "to"
+                        String hours = courseDaysAndHoursList.get(i+1);   // turn hours into a String
+                        String [] fromTo = hours.split(" to ", 2);  // split String at "to"
+
+                        System.out.println("courseDaysAndHoursList = " + courseDaysAndHoursList.toString());
+
+                        System.out.println("hours = " + hours);
+
+                        System.out.println("fromTo = " + Arrays.toString(fromTo));
 
                         courseDaysAndHoursFinalList.add(fromTo[0]);  // add start hour to final list
                         courseDaysAndHoursFinalList.add(fromTo[1]);  // add end hour to final list
+
+                        System.out.println("courseDaysAndHoursFinalList = " + courseDaysAndHoursFinalList.toString());
                     }
                 }
 
@@ -555,7 +567,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         String enrolled = "";
         if(cursor.moveToFirst()){
             do{
-                if (!checkIfStudentIsEnrolled(studentId, courseId)) {
+                if (!checkIfStudentIsEnrolled(studentId, courseId) && !checkStudentCourseOverlap(studentId, courseId)) {
                     enrolled = cursor.getString(8);  // get the course's enrolled student ids String
                     enrolled += Integer.toString(studentId) + "/";  // add the current student's id to the course's enrollment String
 
