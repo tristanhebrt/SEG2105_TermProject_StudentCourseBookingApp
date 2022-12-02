@@ -11,12 +11,14 @@
         android:id="@+id/studentHomeTable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp">
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:id="@+id/STUDENT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textAlignment="center"
             android:text="STUDENT"
             android:textColor="@color/white" />
@@ -30,6 +32,7 @@
                 android:id="@+id/viewAllCourses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:backgroundTint="#3B000000"
                 android:text="View All Courses"
@@ -39,6 +42,7 @@
                 android:id="@+id/viewMyCourses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:backgroundTint="#3B000000"
                 android:text="View My Courses"
@@ -79,6 +83,8 @@
             android:id="@+id/searchCourseStudentHomeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:backgroundTint="#3B000000"
             android:text="Search"
@@ -88,6 +94,8 @@
             android:id="@+id/enrollCourseStudentHomeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:backgroundTint="#3B000000"
             android:text="Enroll into selected course"
@@ -97,6 +105,8 @@
             android:id="@+id/unEnrollCourseStudentHomeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:backgroundTint="#3B000000"
             android:text="Un enroll from selected course"
