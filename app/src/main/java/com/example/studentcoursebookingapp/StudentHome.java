@@ -134,7 +134,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
 
     private void ShowAllCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
 
-        allCoursesArrayAdapter = new ArrayAdapter<CourseModel>(StudentHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getCourses());
+        allCoursesArrayAdapter = new ArrayAdapter<CourseModel>(StudentHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getAllStudentCourses());
         lv_allCourses.setAdapter(allCoursesArrayAdapter);
     }
 
