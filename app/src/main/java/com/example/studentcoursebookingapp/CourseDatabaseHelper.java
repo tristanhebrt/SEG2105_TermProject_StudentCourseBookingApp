@@ -511,26 +511,32 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 System.out.println("selected: " + (selectedCourseDaysAndHoursList.get(i)).toString());
 
                 for (int courseId = 0; courseId < maxCourseId; courseId ++){  // go through all course ids
-                    List<String> checkingDay = new ArrayList<>(getCourseDaysAndHoursList(courseId));  // get checked course day and time
+                    if(courseId != selectedCourseId) {
+                        List<String> checkingDay = new ArrayList<>(getCourseDaysAndHoursList(courseId));  // get checked course day and time
 
-                    for (int j = 0; j < checkingDay.size(); j++) {  // go through the day and time list
-                        if (j % 3 == 0){  // go through the days
-                            int start = Integer.parseInt(checkingDay.get(j+1));   // get class start time
-                            int end = Integer.parseInt(checkingDay.get(j+2));    // get class end time
-                            System.out.println("test overlap: " + (checkingDay.get(j)).toString());
-                            String dayOfWeek = checkingDay.get(j); // declare an assign value to dayOfWeek
+                        for (int j = 0; j < checkingDay.size(); j++) {  // go through the day and time list
+                            if (j % 3 == 0) {  // go through the days
+                                int start = Integer.parseInt(checkingDay.get(j + 1));   // get class start time
+                                int end = Integer.parseInt(checkingDay.get(j + 2));    // get class end time
 
-                            if (selectedDayOfWeek == dayOfWeek){  // if selected course has a class on the same day
-                                int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(i+1));  // get selected class start time
-                                int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(i+2));   // get selected class end time
-                                System.out.println("selected: " + selectedStart + " : " + selectedEnd);
+                                String dayOfWeek = checkingDay.get(j); // declare an assign value to dayOfWeek
+                                System.out.println("test overlap: " + selectedDayOfWeek + " compare to " + dayOfWeek);
 
 
-                                System.out.println("test overlap: " + start + " : " + end);
+                                if (selectedDayOfWeek.equals(dayOfWeek)) {  // if selected course has a class on the same day
+                                    int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(i + 1));  // get selected class start time
+                                    int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(i + 2));   // get selected class end time
+                                    System.out.println("selected: " + selectedStart + " : " + selectedEnd);
 
-                                if (end < selectedStart || start > selectedEnd){  // if there is no overlap
-                                    if (!checkIfStudentIsEnrolled(studentId, courseId)){  // if the student isn't enrolled in the overlapping class
-                                        return true;
+
+                                    System.out.println("test overlap: " + start + " : " + end);
+                                    System.out.println(end + " < " + selectedStart + " || " + start + " > " +selectedEnd);
+
+                                    if (end > selectedStart || start < selectedEnd) {  // if there is no overlap
+                                        if (checkIfStudentIsEnrolled(studentId, courseId)) {  // if the student isn't enrolled in the overlapping class
+                                            System.out.println(checkIfStudentIsEnrolled(studentId, courseId));
+                                            return true;
+                                        }
                                     }
                                 }
                             }
@@ -539,6 +545,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
                 }
             }
         }
+        System.out.println("returning false");
         return false;
     }
 
