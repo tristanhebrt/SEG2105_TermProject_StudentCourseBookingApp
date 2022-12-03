@@ -497,7 +497,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return courseDaysAndHoursFinalList;  // return list where day, start time and end time are separated
     }
 
-    public boolean checkStudentCourseOverlap(int studentId, int selectedCourseId){
+    public boolean checkStudentCourseOverlap(int selectedCourseId, int studentId){
         // find course from selectedCourseId, select COLUMN_COURSE_DAYS_AND_HOURS from the selected course, turn into organised list
         List<String> selectedCourseDaysAndHoursList = new ArrayList<String>(getCourseDaysAndHoursList(selectedCourseId));
 
@@ -662,7 +662,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         String enrolled = "";
         if(cursor.moveToFirst()){
             do{
-                if (!checkIfStudentIsEnrolled(studentId, courseId) && !checkStudentCourseOverlap(studentId, courseId)) {  // if the student isn't already enrolled and there is no overlap
+                if (!checkIfStudentIsEnrolled(studentId, courseId)) {  // if the student isn't already enrolled and there is no overlap
                     enrolled = cursor.getString(8);  // get the course's enrolled student ids String
                     enrolled += Integer.toString(studentId) + "/";  // add the current student's id to the course's enrollment String
 

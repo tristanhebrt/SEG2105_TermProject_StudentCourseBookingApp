@@ -90,10 +90,14 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()){
             case R.id.enrollCourseStudentHomeButton:
 
-                if (courseDatabaseHelper.enrollStudent(selectedCourseId, currentId)) {
-                    Toast.makeText(this, "You are now enrolled", Toast.LENGTH_SHORT).show();
+                if (courseDatabaseHelper.checkStudentCourseOverlap(selectedCourseId, currentId)) {
+                    Toast.makeText(this, "This course overlaps another course", Toast.LENGTH_SHORT).show();
+
+                } else if(!courseDatabaseHelper.enrollStudent(selectedCourseId, currentId)) {
+                    Toast.makeText(this, "You are already enrolled in this course", Toast.LENGTH_SHORT).show();
+
                 } else {
-                    Toast.makeText(this, "Could not enroll", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "You are now enrolled", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
