@@ -103,6 +103,7 @@ public class StudentHome extends AppCompatActivity implements View.OnClickListen
 
             case R.id.unEnrollCourseStudentHomeButton:
                 courseDatabaseHelper.unEnrollStudent(selectedCourseId, currentId);
+                ShowMyCoursesOnListView(courseDatabaseHelper);
                 break;
 
             case R.id.viewAllCourses:
