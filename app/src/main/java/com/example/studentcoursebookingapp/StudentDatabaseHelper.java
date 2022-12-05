@@ -15,23 +15,23 @@ import java.util.List;
 
 public class StudentDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String STUDENT_TABLE = "INSTRUCTOR_TABLE";
-    public static final String COLUMN_ID = "ID";
-    public static final String COLUMN_STUDENT_FIRSTNAME = "INSTRUCTOR_FIRSTNAME";
-    public static final String COLUMN_STUDENT_LASTNAME = "INSTRUCTOR_LASTNAME";
-    public static final String COLUMN_STUDENT_EMAIL = "INSTRUCTOR_EMAIL";
-    public static final String COLUMN_STUDENT_USERNAME = "INSTRUCTOR_USERNAME";
-    public static final String COLUMN_STUDENT_PASSWORD = "INSTRUCTOR_PASSWORD";
+    public static final String STUDENT_TABLE = "STUDENT_TABLE";
+    public static final String COLUMN_STUDENT_ID = "ID";
+    public static final String COLUMN_STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME";
+    public static final String COLUMN_STUDENT_LASTNAME = "STUDENT_LASTNAME";
+    public static final String COLUMN_STUDENT_EMAIL = "STUDENT_EMAIL";
+    public static final String COLUMN_STUDENT_USERNAME = "STUDENT_USERNAME";
+    public static final String COLUMN_STUDENT_PASSWORD = "STUDENT_PASSWORD";
 
     public StudentDatabaseHelper(@Nullable Context context) {
-        super(context, "student.db", null, 2);
+        super(context, "student.db", null, 3);
     }
 
     // called when the database is first accessed
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableStatement = "CREATE TABLE " + STUDENT_TABLE + " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + " " +
+                COLUMN_STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + " " +
                 COLUMN_STUDENT_FIRSTNAME + " TEXT, " +
                 COLUMN_STUDENT_LASTNAME + " TEXT, " +
                 COLUMN_STUDENT_EMAIL + " TEXT, " + " " +
@@ -45,7 +45,9 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
     // for when the database version changes
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE); // drop older table
 
+        onCreate(sqLiteDatabase); // create table again
     }
 
     public boolean createStudentAccount(StudentModel studentModel){
@@ -65,7 +67,7 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteStudentAccount(StudentModel studentModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + STUDENT_TABLE + " WHERE " + COLUMN_ID + " = " + studentModel.getId();
+        String queryString = "DELETE FROM " + STUDENT_TABLE + " WHERE " + COLUMN_STUDENT_ID + " = " + studentModel.getId();
 
         Cursor cursor = db.rawQuery(queryString, null);
 
@@ -131,20 +133,11 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getStudentID(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT " + COLUMN_ID + " FROM " + STUDENT_TABLE + " WHERE " +
+        String query = " SELECT " + COLUMN_STUDENT_ID + " FROM " + STUDENT_TABLE + " WHERE " +
                 COLUMN_STUDENT_USERNAME + " = '" + username + "' AND " + COLUMN_STUDENT_PASSWORD + " = '" + password + "' ";
 
         Cursor cursor = db.rawQuery(query, null);
-        return cursor;
-    }
 
-    public Cursor getStudentFirstName(int ID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = " SELECT " + COLUMN_STUDENT_FIRSTNAME + " FROM " + STUDENT_TABLE + " WHERE " +
-                COLUMN_ID + " = '" + ID + "'";
-
-        Cursor cursor = db.rawQuery(query, null);
-        @SuppressLint("Range") String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_STUDENT_FIRSTNAME));
         return cursor;
     }
 
@@ -163,7 +156,7 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
 
             String query = " SELECT * FROM " +
                     STUDENT_TABLE + " WHERE " +
-                    COLUMN_ID + " = '" + studentId + "'";
+                    COLUMN_STUDENT_ID + " = '" + studentId + "' ";
 
             System.out.println("no error1.2");  // doesn't go any further
 
@@ -183,12 +176,12 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
                     String lastName = cursor.getString(2);
                     String username = cursor.getString(4);
 
-                    System.out.println("firstName :" + firstName);
-                    System.out.println("lastName :" + lastName);
-                    System.out.println("username :" + username);
+                    System.out.println("firstName : " + firstName);
+                    System.out.println("lastName : " + lastName);
+                    System.out.println("username : " + username);
 
                     studentInfo = "Name : " + firstName + " " + lastName +
-                            "Username : " + username;
+                            "\nUsername : " + username;
 
                     System.out.println("studentInfo :" + studentInfo);
 
@@ -203,7 +196,9 @@ public class StudentDatabaseHelper extends SQLiteOpenHelper {
             return studentInfo;
 
         }catch (Exception e) {
-            return studentInfo;
+            return "";
         }
     }
 }
+
+

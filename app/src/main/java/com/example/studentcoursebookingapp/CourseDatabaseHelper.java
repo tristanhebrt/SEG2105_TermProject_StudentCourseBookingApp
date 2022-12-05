@@ -137,7 +137,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
                             System.out.println("studentInfo :" + studentInfo);
 
-                            returnList.add(studentInfo);
+                            returnList.add(studentInfo + "Student ID : " + studentId);
 
                         }catch (Exception e){
                             System.out.println("error trying studentDatabaseHelper.getStudentInfo(studentId)");
@@ -236,7 +236,7 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    public List<CourseModel> getAllStudentCourses(){
+    public List<CourseModel> studentGetAllCourses(){
         List<CourseModel> returnList = new ArrayList<>();
         List<String> returnListString = new ArrayList<>();
 

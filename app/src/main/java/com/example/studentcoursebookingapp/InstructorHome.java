@@ -169,25 +169,22 @@ public class InstructorHome extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void ShowEnrolledStudentsOnListView(CourseDatabaseHelper courseDatabaseHelper) {
+    private void ShowEnrolledStudentsOnListView(CourseDatabaseHelper courseDatabaseHelper) { // work in progress
         studentsInCourseArrayAdapter = new ArrayAdapter<String>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getStudentsInCourse(selectedCourseId));
         lv_studentsInCourse.setAdapter(studentsInCourseArrayAdapter);
     }
 
     private void ShowAllCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
-
         allCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getCourses());
         lv_allCourses.setAdapter(allCoursesArrayAdapter);
     }
 
     private void ShowMyCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
-
         myCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getMyCourses(currentId));
         lv_myCourses.setAdapter(myCoursesArrayAdapter);
     }
 
     private void ShowSearchedCoursesOnListView(CourseDatabaseHelper courseDatabaseHelper) {
-
         searchedCoursesArrayAdapter = new ArrayAdapter<CourseModel>(InstructorHome.this, android.R.layout.simple_list_item_1, courseDatabaseHelper.getSearchedCourses(searchCode, searchName, ""));
         lv_searchedCourses.setAdapter(searchedCoursesArrayAdapter);
         searchCode = "";
