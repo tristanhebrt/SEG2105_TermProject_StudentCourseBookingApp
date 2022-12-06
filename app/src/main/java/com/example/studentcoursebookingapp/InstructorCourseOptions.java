@@ -3,6 +3,8 @@ package com.example.studentcoursebookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -66,20 +69,23 @@ public class InstructorCourseOptions extends AppCompatActivity implements View.O
         btn_unAssign = (Button) findViewById(R.id.unAssignMyselfButton);
 
         Bundle extras = getIntent().getExtras();  // getting currentId and selectedCourseId from InstructorHome
-        if (extras != null){ currentInstructorId = extras.getInt("currentId"); selectedCourseId = extras.getInt("selectedCourseId"); }
+        if (extras != null) {
+            currentInstructorId = extras.getInt("currentId");
+            selectedCourseId = extras.getInt("selectedCourseId");
+        }
 
         setClickListeners();
     }
 
     private void setClickListeners() {
-        for(Button button : Arrays.asList(btn_confirm, btn_unAssign)){
+        for (Button button : Arrays.asList(btn_confirm, btn_unAssign)) {
             button.setOnClickListener(this);
         }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.assignMyselfButton:
                 mondayIsChecked = s_monday.isChecked();
                 tuesdayIsChecked = s_tuesday.isChecked();
@@ -91,8 +97,7 @@ public class InstructorCourseOptions extends AppCompatActivity implements View.O
 
                 try {
                     courseCapacity = Integer.parseInt(et_courseCapacity.getText().toString());
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a valid course capacity.", Toast.LENGTH_SHORT).show();
                 }
 
@@ -100,14 +105,14 @@ public class InstructorCourseOptions extends AppCompatActivity implements View.O
                 instructorName = instructorDatabaseHelper.getInstructorName(currentInstructorId);
 
                 if (daysAndHours == "error") {
-                    Toast.makeText(InstructorCourseOptions.this, "Please enter a start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
-                }else if (daysAndHours == ""){
+                    Toast.makeText(InstructorCourseOptions.this, "Please enter a valid start time and end time for the selected days.", Toast.LENGTH_SHORT).show();
+                } else if (daysAndHours == "") {
                     Toast.makeText(InstructorCourseOptions.this, "Please select at least one day.", Toast.LENGTH_SHORT).show();
-                }else if (courseCapacity <= 0){
+                } else if (courseCapacity <= 0) {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a valid course capacity.", Toast.LENGTH_SHORT).show();
-                }else if (courseDescription == ""){
+                } else if (courseDescription == "") {
                     Toast.makeText(InstructorCourseOptions.this, "Please enter a course description.", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
 
                     Toast.makeText(InstructorCourseOptions.this, "Updated course information", Toast.LENGTH_SHORT).show();
 
@@ -126,56 +131,83 @@ public class InstructorCourseOptions extends AppCompatActivity implements View.O
         }
     }
 
-    private String daysAndHoursToString(Boolean mondayIsChecked, Boolean tuesdayIsChecked, Boolean wednesdayIsChecked, Boolean thursdayIsChecked, Boolean fridayIsChecked){
-        if(mondayIsChecked){
+    private String daysAndHoursToString(Boolean mondayIsChecked, Boolean tuesdayIsChecked, Boolean wednesdayIsChecked, Boolean thursdayIsChecked, Boolean fridayIsChecked) {
+        if (mondayIsChecked) {
             String start = et_mondayStart.getText().toString();
             String end = et_mondayEnd.getText().toString();
-            if (start.equals("") || end.equals("")) {
-                return "error";
-            }else{
+
+            if (testStartEnd(start, end)){
                 daysAndHours += "Monday/" + start + " to " + end + "/";
+            } else {
+                return "error";
             }
         }
 
-        if(tuesdayIsChecked){
+        if (tuesdayIsChecked) {
             String start = et_tuesdayStart.getText().toString();
             String end = et_tuesdayEnd.getText().toString();
-            if (start.equals("") || end.equals("")) {
-                return "error";
-            }else{
+
+
+            if (testStartEnd(start, end)){
                 daysAndHours += "Tuesday/" + start + " to " + end + "/";
+            } else {
+                return "error";
             }
         }
 
-        if(wednesdayIsChecked){
+        if (wednesdayIsChecked) {
             String start = et_wednesdayStart.getText().toString();
             String end = et_wednesdayEnd.getText().toString();
-            if (start.equals("") || end.equals("")) {
-                return "error";
-            }else{
+
+            if (testStartEnd(start, end)){
                 daysAndHours += "Wednesday/" + start + " to " + end + "/";
+            } else {
+                return "error";
             }
         }
 
-        if(thursdayIsChecked){
+        if (thursdayIsChecked) {
             String start = et_thursdayStart.getText().toString();
             String end = et_thursdayEnd.getText().toString();
-            if (start.equals("") || end.equals("")) {
-                return "error";
-            }else{
+
+            if (testStartEnd(start, end)){
                 daysAndHours += "Thursday/" + start + " to " + end + "/";
+            } else {
+                return "error";
             }
         }
 
-        if(fridayIsChecked) {
+        if (fridayIsChecked) {
             String start = et_fridayStart.getText().toString();
             String end = et_fridayEnd.getText().toString();
-            if (start.equals("") || end.equals("")) {
-                return "error";
-            }else{
+
+            if (testStartEnd(start, end)){
                 daysAndHours += "Friday/" + start + " to " + end + "/";
+            } else {
+                return "error";
             }
         }
         return daysAndHours;
+    }
+
+    private boolean testStartEnd (String start, String end){ // make it so it check that start and end minutes < 60
+
+        if (start.equals("") || end.equals("")) {
+            return false;
+        } else {
+            try {
+                double startD = Double.parseDouble(start);
+                double endD = Double.parseDouble(end);
+
+                if(startD >= 1 && endD >= 1){
+                    return true;
+                }
+                return false;
+
+            } catch (NumberFormatException ex) {
+                Toast.makeText(this, "Please enter a number between 1 and 24 for the time", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
     }
 }

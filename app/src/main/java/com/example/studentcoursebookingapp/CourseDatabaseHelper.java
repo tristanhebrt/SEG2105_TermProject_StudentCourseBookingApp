@@ -516,16 +516,16 @@ public class CourseDatabaseHelper extends SQLiteOpenHelper {
 
                         for (int j = 0; j < checkingDay.size(); j++) {  // go through the day and time list
                             if (j % 3 == 0) {  // go through the days
-                                int start = Integer.parseInt(checkingDay.get(j + 1));   // get class start time
-                                int end = Integer.parseInt(checkingDay.get(j + 2));    // get class end time
+                                double start = Double.parseDouble(checkingDay.get(j + 1));   // get class start time
+                                double end = Double.parseDouble(checkingDay.get(j + 2));    // get class end time
 
                                 String dayOfWeek = checkingDay.get(j); // declare an assign value to dayOfWeek
                                 System.out.println("test overlap: " + selectedDayOfWeek + " compare to " + dayOfWeek);
 
 
                                 if (selectedDayOfWeek.equals(dayOfWeek)) {  // if selected course has a class on the same day
-                                    int selectedStart = Integer.parseInt(selectedCourseDaysAndHoursList.get(i + 1));  // get selected class start time
-                                    int selectedEnd = Integer.parseInt(selectedCourseDaysAndHoursList.get(i + 2));   // get selected class end time
+                                    double selectedStart = Double.parseDouble(selectedCourseDaysAndHoursList.get(i + 1));  // get selected class start time
+                                    double selectedEnd = Double.parseDouble(selectedCourseDaysAndHoursList.get(i + 2));   // get selected class end time
                                     System.out.println("selected: " + selectedStart + " : " + selectedEnd);
 
 
