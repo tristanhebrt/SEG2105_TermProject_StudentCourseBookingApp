@@ -4,34 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InstructorAccountCreator">
+    tools:context=".InstructorAccountCreator"
+    android:background="#9E9E9E">
 
     <TextView
         android:id="@+id/CreateStudentAccountTxt"
         android:layout_width="208dp"
         android:layout_height="24dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/name"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="101dp"
-        android:layout_marginTop="136dp"
         android:layout_marginEnd="102dp"
-        android:layout_marginBottom="571dp"
-        android:text="@string/create_a_new_student_account" />
+        android:layout_marginBottom="25dp"
+        android:textSize="20dp"
+        android:text="Create a new student account" />
 
     <LinearLayout
         android:id="@+id/name"
         android:layout_width="367dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/email"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="216dp"
         android:layout_marginEnd="21dp"
-        android:layout_marginBottom="451dp">
+        android:layout_marginBottom="25dp">
 
         <EditText
             android:id="@+id/firstName"
@@ -41,8 +37,8 @@
             android:layout_weight="1"
             android:ems="10"
 
-            android:inputType="textPersonName"
-            android:hint="@string/first_name" />
+            android:hint="@string/first_name"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/lastName"
@@ -52,26 +48,23 @@
             android:layout_weight="1"
             android:ems="10"
 
-            android:inputType="textPersonName"
-            android:hint="@string/last_name" />
+            android:hint="@string/last_name"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/username"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="294dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="392dp"
-        android:ems="10"
 
+        android:layout_marginBottom="25dp"
         android:drawableStart="@drawable/ic_baseline_email_24"
         android:drawablePadding="10dp"
+        android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
@@ -79,52 +72,42 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/password"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="101dp"
-        android:layout_marginTop="386dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="300dp"
-        android:ems="10"
 
+        android:layout_marginBottom="25dp"
         android:drawableStart="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
-        android:inputType="textPersonName"
-        android:hint="@string/username" />
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/createAccount"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="481dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginBottom="205dp"
-        android:ems="10"
 
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="25dp"
         android:drawableStart="@drawable/ic_baseline_lock_24"
         android:drawablePadding="10dp"
+        android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/createAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_width="142dp"
+        android:layout_height="79dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="146dp"
-        android:layout_marginTop="577dp"
-        android:layout_marginEnd="147dp"
-        android:layout_marginBottom="94dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="220dp"
+        android:backgroundTint="#3B000000"
         android:text="@string/create_account" />
 
 </RelativeLayout>
